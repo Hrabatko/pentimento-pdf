@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+	<title>Pentimento PDF</title>
+	<rect width="512" height="512" rx="112" fill="#1f4e8c"/>
+	<path d="M150 88h158l94 94v242a24 24 0 0 1-24 24H150a24 24 0 0 1-24-24V112a24 24 0 0 1 24-24z" fill="#fdfbf6"/>
+	<path d="M308 88v70a24 24 0 0 0 24 24h70z" fill="#c9d6ea"/>
+	<rect x="170" y="236" width="170" height="18" rx="9" fill="#c9d0db"/>
+	<rect x="170" y="280" width="190" height="18" rx="9" fill="#c9d0db"/>
+	<rect x="170" y="368" width="120" height="18" rx="9" fill="#c9d0db"/>
+	<path d="M150 336c40-26 110-30 170-14s80 4 104-10" stroke="#e0703a" stroke-width="34" stroke-linecap="round" fill="none"/>
+</svg>

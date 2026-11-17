@@ -1,0 +1,6 @@
+# LF line endings in all text files: Biome formats to LF, and Git for Windows
+# would otherwise convert them to CRLF when restoring a file.
+* text=auto eol=lf
+
+*.pdf binary
+*.svg text eol=lf

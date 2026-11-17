@@ -1,0 +1,379 @@
+﻿<!doctype html>
+<html lang="cs">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			http-equiv="Content-Security-Policy"
+			content="default-src 'self'; img-src 'self' blob: data:; style-src 'self'; font-src 'self' data:; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'"
+		/>
+		<title>Pentimento PDF</title>
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="stylesheet" href="/src/ui/styles.css" />
+	</head>
+	<body>
+		<header class="toolbar" role="toolbar" aria-label="Nástroje" data-i18n-label="toolbar.label">
+			<span class="app-name"
+				><span id="app-title">Pentimento PDF</span>
+				<span id="app-version" class="app-version"></span
+			></span>
+
+			<!-- Toolbar groups (010): file · history · view · edit · "⋯".
+			     Icon buttons have their name in aria-label; labels (.label) are only
+			     visually hidden in a narrower window, the name for screen readers stays. -->
+			<div class="group">
+				<button id="open-button" type="button" class="labelled" data-icon="folder-open" title="Otevřít soubor PDF (Ctrl+O)" data-i18n-title="toolbar.open.title">
+					<span class="label" data-i18n="toolbar.open">Otevřít</span>
+				</button>
+				<button id="save-button" type="button" class="labelled" data-icon="device-floppy" data-needs-document hidden aria-disabled="true" title="Žádné změny k uložení" data-i18n-title="toolbar.save.nothing">
+					<span class="label" data-i18n="toolbar.save">Uložit</span>
+				</button>
+			</div>
+
+			<div class="group" data-needs-document hidden>
+				<button id="undo-button" type="button" class="icon-button" data-icon="arrow-back-up" aria-label="Zpět" title="Zpět (Ctrl+Z)" data-i18n-label="toolbar.undo" data-i18n-title="toolbar.undo.title"></button>
+				<button id="redo-button" type="button" class="icon-button" data-icon="arrow-forward-up" aria-label="Znovu" title="Znovu (Ctrl+Y)" data-i18n-label="toolbar.redo" data-i18n-title="toolbar.redo.title"></button>
+			</div>
+
+			<div class="group" data-needs-document hidden>
+				<button
+					id="panel-toggle"
+					type="button"
+					class="icon-button"
+					data-icon="layout-sidebar"
+					aria-pressed="true"
+					aria-label="Náhledy"
+					title="Skrýt nebo ukázat náhledy stránek"
+					data-i18n-label="toolbar.thumbnails"
+					data-i18n-title="toolbar.thumbnails.title"
+				></button>
+				<input
+					id="page-input"
+					class="page-input"
+					type="text"
+					inputmode="numeric"
+					aria-label="Číslo stránky"
+					title="Napište číslo stránky a stiskněte Enter"
+					data-i18n-label="toolbar.pageNumber"
+					data-i18n-title="toolbar.pageNumber.title"
+				/>
+				<span id="page-count" class="page-count"></span>
+				<span class="zoom-controls">
+					<button id="zoom-out" type="button" class="icon-button" data-icon="zoom-out" aria-label="Oddálit" title="Oddálit (Ctrl+minus)" data-i18n-label="toolbar.zoomOut" data-i18n-title="toolbar.zoomOut.title"></button>
+					<output id="zoom-value" aria-label="Přiblížení" data-i18n-label="toolbar.zoom"></output>
+					<button id="zoom-in" type="button" class="icon-button" data-icon="zoom-in" aria-label="Přiblížit" title="Přiblížit (Ctrl+plus)" data-i18n-label="toolbar.zoomIn" data-i18n-title="toolbar.zoomIn.title"></button>
+				</span>
+			</div>
+
+			<div class="group" data-needs-document hidden>
+				<button
+					id="lock-indicator"
+					type="button"
+					class="icon-button lock-indicator"
+					data-icon="lock"
+					aria-label="Chráněno heslem"
+					title="Dokument se uloží s heslem. Kliknutím heslo změníte nebo odstraníte."
+					data-i18n-label="toolbar.lock"
+					data-i18n-title="toolbar.lock.title"
+					hidden
+				></button>
+				<button
+					id="edit-text-button"
+					type="button"
+					class="labelled"
+					data-icon="pencil"
+					aria-pressed="false"
+					title="Režim úprav textu: dvojklikem na řádek ho upravíte (Esc vypne)"
+					data-i18n-title="toolbar.editText.title"
+				>
+					<span class="label" data-i18n="toolbar.editText">Upravit text</span>
+				</button>
+				<button
+					id="sign-button"
+					type="button"
+					class="labelled"
+					data-icon="signature"
+					aria-haspopup="menu"
+					aria-expanded="false"
+					aria-controls="signature-menu"
+					title="Vložit podpis do dokumentu"
+					data-i18n-title="toolbar.sign.title"
+					disabled
+				>
+					<span class="label" data-i18n="toolbar.sign">Podepsat</span>
+				</button>
+				<button id="ocr-button" type="button" class="labelled" data-icon="text-recognition" aria-disabled="true" title="Zjišťuji, zda dokument obsahuje skenované stránky…" data-i18n-title="ocr.title.checking">
+					<span class="label" data-i18n="toolbar.ocr">Rozpoznat text</span>
+				</button>
+				<button id="find-button" type="button" class="icon-button" data-icon="search" aria-label="Hledat" title="Hledat v dokumentu (Ctrl+F)" data-i18n-label="toolbar.find" data-i18n-title="toolbar.find.title"></button>
+			</div>
+
+			<span class="toolbar-spacer"></span>
+			<button
+				id="more-button"
+				type="button"
+				class="icon-button"
+				data-icon="dots"
+				aria-label="Další možnosti"
+				data-i18n-label="toolbar.more"
+				data-i18n-title="toolbar.more"
+				aria-haspopup="menu"
+				aria-expanded="false"
+				aria-controls="more-menu"
+				title="Další možnosti"
+			></button>
+		</header>
+
+		<!-- The "⋯" menu (010). Items have the same ids as the earlier toolbar buttons,
+		     so their handlers don't change. data-overflow items show only in a
+		     narrower window, where the corresponding toolbar buttons aren't visible. -->
+		<!-- The signature menu (012): items are created by signature-menu.ts. -->
+		<div id="signature-menu" class="menu signature-menu" role="menu" aria-label="Podpisy" data-i18n-label="signatureMenu.label" hidden></div>
+
+		<div id="more-menu" class="menu" role="menu" aria-label="Další možnosti" data-i18n-label="toolbar.more" hidden>
+			<button id="save-as-button" type="button" role="menuitem" data-icon="file-export" data-needs-document hidden>
+				<span data-i18n="menu.saveAs">Uložit jako…</span><span class="shortcut" aria-hidden="true">Ctrl+Shift+S</span>
+			</button>
+			<button id="split-button" type="button" role="menuitem" data-icon="arrows-split" data-needs-document hidden><span data-i18n="menu.split">Rozdělit</span></button>
+			<button id="password-button" type="button" role="menuitem" data-icon="key" data-needs-document hidden><span data-i18n="menu.password">Heslo…</span></button>
+			<hr class="menu-separator" data-needs-document hidden />
+			<button id="zoom-page-fit" type="button" role="menuitem" data-icon="maximize" data-needs-document hidden>
+				<span data-i18n="menu.pageFit">Celá stránka</span><span class="shortcut" aria-hidden="true">Ctrl+0</span>
+			</button>
+			<button id="zoom-page-width" type="button" role="menuitem" data-icon="arrows-horizontal" data-needs-document hidden><span data-i18n="menu.pageWidth">Na šířku</span></button>
+			<button id="zoom-actual" type="button" role="menuitem" data-icon="zoom-reset" data-needs-document hidden><span data-i18n="menu.actualSize">100 %</span></button>
+			<button type="button" role="menuitem" class="overflow-item" data-icon="zoom-out" data-forward="zoom-out" data-needs-document hidden>
+				<span data-i18n="toolbar.zoomOut">Oddálit</span><span class="shortcut" aria-hidden="true">Ctrl+minus</span>
+			</button>
+			<button type="button" role="menuitem" class="overflow-item" data-icon="zoom-in" data-forward="zoom-in" data-needs-document hidden>
+				<span data-i18n="toolbar.zoomIn">Přiblížit</span><span class="shortcut" aria-hidden="true">Ctrl+plus</span>
+			</button>
+			<button type="button" role="menuitem" class="overflow-item" data-icon="search" data-forward="find-button" data-needs-document hidden>
+				<span data-i18n="toolbar.find">Hledat</span><span class="shortcut" aria-hidden="true">Ctrl+F</span>
+			</button>
+			<hr class="menu-separator" data-needs-document hidden />
+			<fieldset class="menu-group" aria-label="Vzhled" data-i18n-label="menu.theme">
+				<span class="menu-heading" aria-hidden="true" data-i18n="menu.theme">Vzhled</span>
+				<button type="button" role="menuitemradio" aria-checked="false" data-icon="sun" data-theme-option="light"><span data-i18n="menu.theme.light">Světlý</span></button>
+				<button type="button" role="menuitemradio" aria-checked="false" data-icon="moon" data-theme-option="dark"><span data-i18n="menu.theme.dark">Tmavý</span></button>
+				<button type="button" role="menuitemradio" aria-checked="true" data-icon="device-desktop" data-theme-option="system"><span data-i18n="menu.theme.system">Podle systému</span></button>
+			</fieldset>
+			<hr class="menu-separator" />
+			<!-- Language names always in their own language (011), hence not translated. -->
+			<fieldset class="menu-group" aria-label="Jazyk" data-i18n-label="menu.language">
+				<span class="menu-heading" aria-hidden="true" data-i18n="menu.language">Jazyk</span>
+				<button type="button" role="menuitemradio" aria-checked="false" data-language-option="cs" lang="cs">Čeština</button>
+				<button type="button" role="menuitemradio" aria-checked="false" data-language-option="en" lang="en">English</button>
+				<button type="button" role="menuitemradio" aria-checked="true" data-language-option="system"><span data-i18n="menu.language.system">Podle systému</span></button>
+			</fieldset>
+			<hr class="menu-separator" />
+			<button id="about-button" type="button" role="menuitem" data-icon="info-circle"><span data-i18n="menu.about">O programu</span></button>
+		</div>
+
+		<search id="find-bar" class="find-bar" hidden>
+			<input id="find-input" type="search" aria-label="Hledat v dokumentu" placeholder="Hledat v dokumentu" data-i18n-label="find.input" data-i18n-placeholder="find.input" />
+			<span id="find-result" class="find-result" aria-live="polite"></span>
+			<button id="find-previous" type="button" class="icon-button" data-icon="chevron-up" aria-label="Předchozí výskyt" title="Předchozí (Shift+Enter)" data-i18n-label="find.previous" data-i18n-title="find.previous.title"></button>
+			<button id="find-next" type="button" class="icon-button" data-icon="chevron-down" aria-label="Další výskyt" title="Další (Enter)" data-i18n-label="find.next" data-i18n-title="find.next.title"></button>
+			<button id="find-close" type="button" class="icon-button" data-icon="x" aria-label="Zavřít hledání" title="Zavřít (Esc)" data-i18n-label="find.close" data-i18n-title="find.close.title"></button>
+		</search>
+
+		<div id="message" class="message" role="alert" hidden>
+			<span class="message-icon message-icon-info" data-icon="info-circle"></span>
+			<span class="message-icon message-icon-error" data-icon="alert-triangle"></span>
+			<span id="message-text"></span>
+			<button id="message-close" type="button" class="icon-button" data-icon="x" aria-label="Zavřít zprávu" title="Zavřít" data-i18n-label="message.close" data-i18n-title="message.close.title"></button>
+		</div>
+
+		<div id="progress" class="progress" hidden>
+			<span id="progress-text" role="status"></span>
+			<button id="progress-cancel" type="button" hidden data-i18n="common.cancel">Zrušit</button>
+		</div>
+
+		<aside id="thumbnail-panel" class="thumbnail-panel" aria-label="Náhledy stránek" data-i18n-label="pages.panel" hidden>
+			<div class="panel-tools" role="toolbar" aria-label="Úpravy stránek" data-i18n-label="pages.tools">
+				<button id="rotate-left" type="button" class="icon-button" data-icon="rotate" aria-label="Otočit vlevo" title="Otočit vybrané stránky vlevo" data-i18n-label="pages.rotateLeft" data-i18n-title="pages.rotateLeft.title"></button>
+				<button id="rotate-right" type="button" class="icon-button" data-icon="rotate-clockwise" aria-label="Otočit vpravo" title="Otočit vybrané stránky vpravo" data-i18n-label="pages.rotateRight" data-i18n-title="pages.rotateRight.title"></button>
+				<button id="delete-pages" type="button" class="icon-button" data-icon="trash" aria-label="Smazat" title="Smazat vybrané stránky (Delete)" data-i18n-label="pages.delete" data-i18n-title="pages.delete.title"></button>
+				<button id="insert-pages" type="button" class="icon-button" data-icon="file-plus" aria-label="Vložit" title="Vložit stránky z jiného PDF" data-i18n-label="pages.insert" data-i18n-title="pages.insert.title"></button>
+				<button id="extract-pages" type="button" class="icon-button" data-icon="scissors" aria-label="Vyjmout" title="Uložit vybrané stránky jako nový soubor" data-i18n-label="pages.extract" data-i18n-title="pages.extract.title"></button>
+			</div>
+			<div
+				id="thumbnail-list"
+				class="thumbnail-list"
+				role="listbox"
+				aria-multiselectable="true"
+				aria-label="Stránky"
+				data-i18n-label="pages.list"
+			></div>
+		</aside>
+
+		<main id="document-area" class="document-area" aria-label="Dokument" data-i18n-label="document.label">
+			<!-- Start screen without a document (010). -->
+			<div id="empty-state" class="empty-state">
+				<div class="welcome">
+					<span class="welcome-icon" data-icon="file-text"></span>
+					<h1 class="welcome-title" data-i18n="welcome.title">Otevřete soubor PDF</h1>
+					<p class="welcome-text" data-i18n="welcome.text">Přetáhněte ho sem, nebo ho vyberte tlačítkem.</p>
+					<button id="welcome-open" type="button" class="primary" data-icon="folder-open">
+						<span data-i18n="welcome.open">Otevřít soubor…</span><span class="shortcut" aria-hidden="true">Ctrl+O</span>
+					</button>
+					<ul class="welcome-features">
+						<li data-i18n="welcome.feature.editText">Přepsání textu přímo v PDF</li>
+						<li data-i18n="welcome.feature.pages">Otočení, mazání, přesun a vkládání stránek</li>
+						<li data-i18n="welcome.feature.mergeSplit">Sloučení a rozdělení souborů</li>
+						<li data-i18n="welcome.feature.password">Heslo k souboru</li>
+						<li data-i18n="welcome.feature.ocr">Hledání ve skenech</li>
+					</ul>
+					<p class="welcome-note" data-i18n="welcome.note">Soubory nikdy neopustí počítač.</p>
+				</div>
+			</div>
+			<!-- tabIndex is set by main.ts: the scrollable area must be keyboard-focusable. -->
+			<div id="viewer-container" class="viewer-container">
+				<div id="viewer" class="pdfViewer"></div>
+			</div>
+		</main>
+
+		<div id="context-menu" class="context-menu" role="menu" aria-label="Úpravy stránek" data-i18n-label="pages.tools" hidden>
+			<button type="button" role="menuitem" data-action="rotate-left" data-i18n="pages.rotateLeft">Otočit vlevo</button>
+			<button type="button" role="menuitem" data-action="rotate-right" data-i18n="pages.rotateRight">Otočit vpravo</button>
+			<button type="button" role="menuitem" data-action="delete" data-i18n="pages.delete">Smazat</button>
+			<button type="button" role="menuitem" data-action="insert" data-i18n="pages.menu.insert">Vložit z PDF…</button>
+			<button type="button" role="menuitem" data-action="extract" data-i18n="pages.menu.extract">Vyjmout do nového souboru…</button>
+		</div>
+
+		<div id="drop-overlay" class="drop-overlay" hidden data-i18n="drop.hint">Pusťte soubor PDF</div>
+
+		<dialog id="password-dialog" aria-labelledby="password-title">
+			<form method="dialog">
+				<h2 id="password-title" data-i18n="passwordDialog.title">Dokument je chráněný heslem</h2>
+				<p id="password-reason" data-i18n="passwordDialog.reason">Zadejte heslo pro otevření dokumentu.</p>
+				<input id="password-input" type="password" aria-label="Heslo" data-i18n-label="passwordDialog.input" autocomplete="off" />
+				<div class="dialog-buttons">
+					<button id="password-ok" type="submit" value="ok" class="primary" data-i18n="passwordDialog.open">Otevřít</button>
+					<button id="password-cancel" type="submit" value="cancel" formnovalidate data-i18n="common.cancel">Zrušit</button>
+				</div>
+			</form>
+		</dialog>
+
+		<dialog id="signature-dialog" aria-labelledby="signature-title">
+			<form method="dialog">
+				<h2 id="signature-title" data-i18n="signatureDialog.title">Přidat podpis</h2>
+				<p data-i18n="signatureDialog.text">Vyberte fotku nebo sken podpisu na světlém papíře (PNG nebo JPG). Světlé pozadí se odstraní a podpis se uloží jen v tomto počítači.</p>
+				<button id="signature-pick" type="button" data-i18n="signatureDialog.pick">Vybrat obrázek…</button>
+				<div class="signature-preview">
+					<canvas id="signature-canvas" role="img" aria-label="Náhled podpisu" data-i18n-label="signatureDialog.preview" hidden></canvas>
+					<span id="signature-no-image" data-i18n="signatureDialog.noImage">Zatím není vybraný obrázek.</span>
+				</div>
+				<label class="field"
+					><span data-i18n="signatureDialog.name">Název</span>
+					<input id="signature-name" type="text" autocomplete="off" placeholder="např. Jan Novák" data-i18n-placeholder="signatureDialog.namePlaceholder"
+				/></label>
+				<p id="signature-error" class="split-error" aria-live="polite"></p>
+				<div class="dialog-buttons">
+					<button id="signature-ok" type="submit" value="ok" class="primary" data-i18n="signatureDialog.save" disabled>Uložit podpis</button>
+					<button type="submit" value="cancel" formnovalidate data-i18n="common.cancel">Zrušit</button>
+				</div>
+			</form>
+		</dialog>
+
+		<dialog id="rename-dialog" aria-labelledby="rename-title">
+			<form method="dialog">
+				<h2 id="rename-title" data-i18n="renameDialog.title">Přejmenovat podpis</h2>
+				<label class="field"
+					><span data-i18n="signatureDialog.name">Název</span>
+					<input id="rename-name" type="text" autocomplete="off"
+				/></label>
+				<p id="rename-error" class="split-error" aria-live="polite"></p>
+				<div class="dialog-buttons">
+					<button id="rename-ok" type="submit" value="ok" class="primary" data-i18n="renameDialog.save">Přejmenovat</button>
+					<button type="submit" value="cancel" formnovalidate data-i18n="common.cancel">Zrušit</button>
+				</div>
+			</form>
+		</dialog>
+
+		<!-- About (016): version, publisher, licenses; the license texts are generated at build time. -->
+		<dialog id="about-dialog" class="about-dialog" aria-labelledby="about-title">
+			<form method="dialog">
+				<h2 id="about-title" data-i18n="about.title">O programu</h2>
+				<p><strong id="about-name"></strong> <span id="about-version"></span></p>
+				<p id="about-publisher"></p>
+				<p data-i18n="about.description">Bezplatný program pro Windows na úpravy PDF. Soubory neopustí váš počítač: program nic neodesílá a nesbírá žádná data.</p>
+				<p id="about-license"></p>
+				<pre id="about-license-text" class="about-license-text" hidden></pre>
+				<div class="dialog-buttons">
+					<button type="submit" value="close" class="primary" data-i18n="common.close">Zavřít</button>
+					<button id="about-show-third-party" type="button" data-i18n="about.showThirdParty">Licence knihoven a dat</button>
+					<button id="about-show-license" type="button" data-i18n="about.showLicense">Licence programu</button>
+				</div>
+			</form>
+		</dialog>
+
+		<dialog id="choice-dialog" aria-labelledby="choice-title">
+			<h2 id="choice-title" data-i18n="choiceDialog.title">Dotaz</h2>
+			<p id="choice-text"></p>
+			<div id="choice-buttons" class="dialog-buttons"></div>
+		</dialog>
+
+		<dialog id="security-dialog" aria-labelledby="security-title">
+			<form method="dialog">
+				<h2 id="security-title">Nastavit heslo</h2>
+				<p id="security-text"></p>
+				<!-- autocomplete="new-password": Chrome neither offers nor stores passwords. -->
+				<label class="field"><span data-i18n="securityDialog.newPassword">Nové heslo</span> <input id="new-password" type="password" autocomplete="new-password" /></label>
+				<label class="field"><span data-i18n="securityDialog.repeatPassword">Zopakovat heslo</span> <input id="repeat-password" type="password" autocomplete="new-password" /></label>
+				<p id="security-error" class="split-error" aria-live="polite"></p>
+				<div class="dialog-buttons">
+					<button id="security-ok" type="submit" value="ok" class="primary">Nastavit heslo</button>
+					<button type="submit" value="cancel" formnovalidate data-i18n="common.cancel">Zrušit</button>
+					<button id="security-remove" type="submit" value="remove" formnovalidate data-i18n="securityDialog.remove">Odstranit heslo</button>
+				</div>
+			</form>
+		</dialog>
+
+		<dialog id="insert-dialog" aria-labelledby="insert-title">
+			<form method="dialog">
+				<h2 id="insert-title" data-i18n="insertDialog.title">Vložit stránky</h2>
+				<p><span data-i18n="insertDialog.files">Vkládá se:</span> <span id="insert-files"></span></p>
+				<fieldset>
+					<legend data-i18n="insertDialog.position">Kam vložit</legend>
+					<label><input type="radio" name="insert-position" value="before" /> <span data-i18n="insertDialog.before">Před vybranou stránku</span></label>
+					<label><input id="insert-after" type="radio" name="insert-position" value="after" checked /> <span data-i18n="insertDialog.after">Za vybranou stránku</span></label>
+					<label><input type="radio" name="insert-position" value="start" /> <span data-i18n="insertDialog.start">Na začátek</span></label>
+					<label><input type="radio" name="insert-position" value="end" /> <span data-i18n="insertDialog.end">Na konec</span></label>
+				</fieldset>
+				<div class="dialog-buttons">
+					<button type="submit" value="ok" class="primary" data-i18n="insertDialog.confirm">Vložit</button>
+					<button type="submit" value="cancel" formnovalidate data-i18n="common.cancel">Zrušit</button>
+				</div>
+			</form>
+		</dialog>
+
+		<dialog id="split-dialog" aria-labelledby="split-title">
+			<form method="dialog">
+				<h2 id="split-title" data-i18n="splitDialog.title">Rozdělit dokument</h2>
+				<p id="split-page-count"></p>
+				<fieldset>
+					<legend data-i18n="splitDialog.mode">Způsob rozdělení</legend>
+					<label><input id="split-each" type="radio" name="split-mode" value="each" checked /> <span data-i18n="splitDialog.each">Po každé stránce</span></label>
+					<label
+						><input type="radio" name="split-mode" value="every" /> <span data-i18n="splitDialog.everyBefore">Po</span>
+						<input id="split-n" type="text" inputmode="numeric" value="1" aria-label="Počet stránek v souboru" data-i18n-label="splitDialog.everyInput" class="small-input" />
+						<span id="split-every-after"></span></label
+					>
+					<label
+						><input type="radio" name="split-mode" value="ranges" /> <span data-i18n="splitDialog.ranges">Podle rozsahů</span>
+						<input id="split-ranges" type="text" placeholder="např. 1-3, 4-10, 12" aria-label="Rozsahy stránek" data-i18n-placeholder="splitDialog.rangesPlaceholder" data-i18n-label="splitDialog.rangesInput" /></label>
+				</fieldset>
+				<p id="split-preview" class="split-preview" aria-live="polite"></p>
+				<p id="split-error" class="split-error" aria-live="polite"></p>
+				<div class="dialog-buttons">
+					<button id="split-confirm" type="submit" value="ok" class="primary" data-i18n="splitDialog.confirm">Vybrat složku a rozdělit</button>
+					<button type="submit" value="cancel" formnovalidate data-i18n="common.cancel">Zrušit</button>
+				</div>
+			</form>
+		</dialog>
+
+		<script type="module" src="/src/ui/main.ts"></script>
+	</body>
+</html>

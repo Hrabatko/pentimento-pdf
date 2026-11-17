@@ -1,0 +1,55 @@
+# Building the program and the MSI installer (spec 014, electron-builder 26.18.1).
+# Run via sestavit-instalator.cmd (npm.cmd run installer).
+# Options: node_modules/app-builder-lib/scheme.json.
+
+appId: com.electron.pentimento-pdf
+# The name (productName) and version number are in package.json and must match
+# APP_NAME and APP_VERSION in src/core/app-info.ts (checked by a test). The
+# program file and the data folder (%APPDATA%\Pentimento PDF) are named after it.
+
+directories:
+  output: release
+
+# ONLY the built app and the program go into the program. Never source code,
+# tests or tests/data (the owner's real documents) — checked by a test.
+files:
+  - dist/**/*
+  - dist-electron/**/*
+  - package.json
+  # The libraries are already in the built app (Vite); node_modules isn't needed.
+  - "!**/node_modules/**/*"
+
+# Windows 11 Smart App Control runs an unsigned program only when it knows it.
+# That's why the program file stays unchanged as the original electron.exe
+# (only renamed): no edits to the icon or file details, and no app.asar
+# archive, which would make a hash get written into the file. The window,
+# shortcuts and "Open with" have the icon.
+# Findings and verification 2026-11-16: specs/014-klasicky-instalator.md, Notes.
+asar: false
+
+win:
+  target:
+    - msi
+  icon: public/icons/icon.ico
+  signAndEditExecutable: false
+
+# The MSI installer is installed by Windows Installer (signed by Microsoft),
+# so Windows protection lets it through (verified 2026-11-16).
+msi:
+  oneClick: true
+  # Only for the current user, without administrator rights
+  # (%LOCALAPPDATA%\Programs\Pentimento PDF).
+  perMachine: false
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Pentimento PDF
+  runAfterFinish: true
+  # MSI project validation (ICE) needs administrator rights; without them the
+  # build would fail with LGHT1105. Only this check is turned off, other
+  # warnings stay errors.
+  additionalLightArgs:
+    - -sval
+  artifactName: ${productName} ${version}.${ext}
+
+# "Open with" without changing the default PDF program.
+msiProjectCreated: ./installer/msi-project.ts

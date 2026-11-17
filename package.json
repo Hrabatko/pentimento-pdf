@@ -1,0 +1,55 @@
+{
+	"name": "pentimento-pdf",
+	"productName": "Pentimento PDF",
+	"version": "0.12.1",
+	"private": true,
+	"type": "module",
+	"description": "Bezplatný nástroj pro Windows na úpravy PDF, které bezplatný Adobe Reader neumí.",
+	"author": "Hrabatko",
+	"license": "GPL-3.0-or-later",
+	"engines": {
+		"node": ">=26.13.0"
+	},
+	"scripts": {
+		"pdfjs-assets": "node scripts/copy-pdfjs-assets.ts && node scripts/copy-ocr-assets.ts && node scripts/third-party-licenses.ts",
+		"predev": "npm run pdfjs-assets",
+		"dev": "vite --host 127.0.0.1 --port 5173 --strictPort",
+		"prebuild": "npm run pdfjs-assets",
+		"build": "vite build",
+		"preview": "vite preview --host 127.0.0.1 --port 4173 --strictPort",
+		"build:electron": "vite build --config vite.electron.config.ts",
+		"program": "npm run build && npm run build:electron && electron .",
+		"package": "npm run build && npm run build:electron && electron-builder --win --dir",
+		"installer": "npm run build && npm run build:electron && electron-builder --win msi",
+		"typecheck": "tsc --noEmit -p tsconfig.json",
+		"lint": "biome check --error-on-warnings .",
+		"format": "biome check --write .",
+		"check": "npm run typecheck && npm run lint",
+		"testdata": "node scripts/generate-test-pdfs.ts",
+		"test": "node --test \"tests/unit/**/*.test.ts\"",
+		"e2e": "playwright test",
+		"test:package": "playwright test --config playwright.package.config.ts",
+		"verify": "npm run testdata && npm run check && npm test && npm run e2e && npm run installer && npm run test:package"
+	},
+	"dependencies": {
+		"@cantoo/fontkit": "2.0.12",
+		"@cantoo/pdf-lib": "2.11.1",
+		"@expo-google-fonts/noto-sans": "0.4.2",
+		"@expo-google-fonts/noto-serif": "0.4.2",
+		"@tabler/icons": "3.50.0",
+		"@tesseract.js-data/ces": "1.0.0",
+		"@tesseract.js-data/eng": "1.0.0",
+		"pdfjs-dist": "6.5.438",
+		"tesseract.js": "7.0.0"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.6.5",
+		"@playwright/test": "1.64.1",
+		"@types/node": "26.6.6",
+		"electron": "45.2.1",
+		"electron-builder": "26.18.1",
+		"typescript": "7.0.2",
+		"vite": "8.3.6"
+	},
+	"main": "dist-electron/main.cjs"
+}

@@ -1,0 +1,986 @@
+@import "pdfjs-dist/web/pdf_viewer.css";
+
+/*
+ * Windows 11 look (spec 010). All colours are here; each has a light and a
+ * dark value (light-dark). Which mode applies is decided by color-scheme:
+ * "light dark" = follow Windows, data-theme on <html> = a theme chosen by
+ * hand (src/ui/theme.ts). Document pages stay white.
+ */
+:root {
+	color-scheme: light dark;
+	font-family: "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+	font-size: 14px;
+	--toolbar-height: 48px;
+	--panel-width: 170px;
+	--radius: 4px;
+	--radius-large: 8px;
+	accent-color: var(--accent);
+
+	--bg-app: light-dark(#f3f3f3, #202020);
+	--bg-surface: light-dark(#fbfbfb, #272727);
+	--bg-raised: light-dark(#ffffff, #2c2c2c);
+	--bg-canvas: light-dark(#e6e6e6, #191919);
+	--text: light-dark(#1b1b1b, #ffffff);
+	--text-secondary: light-dark(#5d5d5d, #c8c8c8);
+	--border: light-dark(rgb(0 0 0 / 9%), rgb(255 255 255 / 9%));
+	--border-strong: light-dark(rgb(0 0 0 / 18%), rgb(255 255 255 / 18%));
+	--control-bg: light-dark(#ffffff, rgb(255 255 255 / 6%));
+	--control-hover: light-dark(#f6f6f6, rgb(255 255 255 / 9%));
+	--control-active: light-dark(#f0f0f0, rgb(255 255 255 / 4%));
+	--accent: light-dark(#005fb8, #60cdff);
+	--accent-hover: light-dark(#196ebf, #5abce6);
+	--on-accent: light-dark(#ffffff, #000000);
+	--accent-soft: color-mix(in srgb, var(--accent) 14%, transparent);
+	--danger: light-dark(#c42b1c, #ff99a4);
+	--danger-soft: light-dark(#fde7e9, #442726);
+	--danger-text: light-dark(#9a1f13, #ffc9cf);
+	--info-soft: light-dark(#e6f1fb, #1d3346);
+	--info-text: light-dark(#003e73, #a8dcff);
+	--shadow-flyout: 0 8px 16px light-dark(rgb(0 0 0 / 14%), rgb(0 0 0 / 40%));
+	--shadow-dialog: 0 32px 64px light-dark(rgb(0 0 0 / 19%), rgb(0 0 0 / 50%));
+}
+
+:root[data-theme="light"] {
+	color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+	color-scheme: dark;
+}
+
+body {
+	margin: 0;
+	height: 100vh;
+	overflow: hidden;
+	background: var(--bg-app);
+	color: var(--text);
+}
+
+[hidden] {
+	/* biome-ignore lint/complexity/noImportantStyles: the hidden attribute must always hide the element, even when its class sets display. */
+	display: none !important;
+}
+
+.toolbar {
+	position: absolute;
+	inset: 0 0 auto 0;
+	height: var(--toolbar-height);
+	display: flex;
+	align-items: center;
+	gap: 0;
+	padding: 0 0.5rem;
+	border-bottom: 1px solid var(--border);
+	box-sizing: border-box;
+	background: var(--bg-surface);
+	z-index: 2;
+	/* The toolbar fits into 1200 px; in a narrower window the buttons move into
+	   "⋯" (media below). Scrolling remains only as a safety net below 900 px. */
+	overflow-x: auto;
+	overflow-y: hidden;
+	white-space: nowrap;
+}
+
+.toolbar-spacer {
+	flex: 1;
+}
+
+.app-name {
+	font-weight: 600;
+	white-space: nowrap;
+}
+
+.app-version {
+	font-weight: 400;
+	color: var(--text-secondary);
+	font-size: 0.8rem;
+}
+
+.group {
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	padding: 0 0.5rem;
+}
+
+button {
+	font: inherit;
+	min-height: 32px;
+	padding: 0.25rem 0.75rem;
+	border: 1px solid var(--border-strong);
+	border-radius: var(--radius);
+	background: var(--control-bg);
+	color: var(--text);
+	cursor: pointer;
+	white-space: nowrap;
+	flex-shrink: 0;
+}
+
+button:hover {
+	background: var(--control-hover);
+}
+
+button:active {
+	background: var(--control-active);
+	color: var(--text-secondary);
+}
+
+button:focus-visible,
+input:focus-visible {
+	outline: 2px solid var(--text);
+	outline-offset: 1px;
+}
+
+/* The line edit field (.text-line-editor) has its own look — it lies on the
+   white document page and must cover the original text; the general rules
+   skip it. */
+input[type="text"]:not(.text-line-editor),
+input[type="search"],
+input[type="password"] {
+	font: inherit;
+	min-height: 32px;
+	box-sizing: border-box;
+	padding: 0.2rem 0.5rem;
+	border: 1px solid var(--border-strong);
+	border-bottom-color: var(--text-secondary);
+	border-radius: var(--radius);
+	background: var(--control-bg);
+	color: var(--text);
+}
+
+input[type="text"]:not(.text-line-editor):focus,
+input[type="search"]:focus,
+input[type="password"]:focus {
+	border-bottom: 2px solid var(--accent);
+	outline: none;
+}
+
+.page-input {
+	width: 3.5rem;
+	text-align: right;
+}
+
+#zoom-value {
+	display: inline-block;
+	min-width: 3.5rem;
+	text-align: center;
+}
+
+.find-bar {
+	position: absolute;
+	top: calc(var(--toolbar-height) + 6px);
+	right: 1.5rem;
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+	padding: 0.4rem;
+	border: 1px solid var(--border);
+	border-radius: var(--radius-large);
+	background: var(--bg-raised);
+	box-shadow: var(--shadow-flyout);
+	z-index: 3;
+}
+
+#find-input {
+	width: 14rem;
+}
+
+.find-result {
+	min-width: 6rem;
+	text-align: center;
+	font-size: 0.9rem;
+}
+
+.find-result.not-found {
+	color: var(--danger);
+	font-weight: 600;
+}
+
+/* Notifications in the bottom right corner (010): information disappears by
+   itself (main.ts), errors stay until the user closes them. */
+.message {
+	position: absolute;
+	right: 1rem;
+	bottom: 1rem;
+	display: flex;
+	align-items: flex-start;
+	gap: 0.75rem;
+	width: max-content;
+	max-width: min(28rem, calc(100vw - 2rem));
+	padding: 0.5rem 0.75rem;
+	border-radius: var(--radius-large);
+	background: var(--danger-soft);
+	color: var(--danger-text);
+	border: 1px solid var(--border);
+	box-shadow: var(--shadow-flyout);
+	z-index: 4;
+}
+
+.message.info {
+	background: var(--info-soft);
+	color: var(--info-text);
+}
+
+.message button {
+	min-height: 24px;
+	padding: 0 0.5rem;
+	border: none;
+	background: transparent;
+	color: inherit;
+}
+
+.document-area {
+	position: absolute;
+	inset: var(--toolbar-height) 0 0 0;
+}
+
+.document-area.with-panel {
+	left: var(--panel-width);
+}
+
+/* --- Thumbnail panel (003) --- */
+
+.thumbnail-panel {
+	position: absolute;
+	inset: var(--toolbar-height) auto 0 0;
+	width: var(--panel-width);
+	display: flex;
+	flex-direction: column;
+	border-right: 1px solid var(--border);
+	box-sizing: border-box;
+	background: var(--bg-surface);
+}
+
+.panel-tools {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 2px;
+	padding: 4px;
+	border-bottom: 1px solid var(--border);
+}
+
+.panel-tools button {
+	/* Five icons must fit into the panel width on one line. */
+	min-width: 28px;
+	min-height: 28px;
+	padding: 2px;
+	font-size: 1rem;
+}
+
+.thumbnail-list {
+	position: relative;
+	flex: 1;
+	overflow-y: auto;
+	padding: 8px 0;
+	outline: none;
+}
+
+.thumb {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 2px;
+	margin: 4px auto;
+	padding: 4px;
+	width: 132px;
+	border: 2px solid transparent;
+	border-radius: var(--radius);
+	cursor: pointer;
+	user-select: none;
+}
+
+.thumb canvas {
+	background: #fff;
+	box-shadow: 0 0 2px rgb(0 0 0 / 40%);
+}
+
+/* The current page (when several other pages are selected) — a clear frame. */
+.thumb.current {
+	border-color: var(--text-secondary);
+}
+
+.thumb.selected {
+	border-color: var(--accent);
+	background: var(--accent-soft);
+}
+
+.thumb-number {
+	font-size: 0.8rem;
+	color: var(--text-secondary);
+}
+
+.drop-marker {
+	position: absolute;
+	left: 8px;
+	right: 8px;
+	height: 3px;
+	background: var(--accent);
+	pointer-events: none;
+}
+
+.context-menu {
+	position: fixed;
+	display: flex;
+	flex-direction: column;
+	min-width: 14rem;
+	padding: 4px;
+	border: 1px solid var(--border);
+	border-radius: var(--radius-large);
+	background: var(--bg-raised);
+	box-shadow: var(--shadow-flyout);
+	z-index: 20;
+}
+
+.context-menu button {
+	text-align: left;
+	border: none;
+	background: transparent;
+	color: var(--text);
+}
+
+.context-menu button:hover,
+.context-menu button:focus {
+	background: var(--control-hover);
+}
+
+.progress {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	position: absolute;
+	bottom: 1rem;
+	left: 50%;
+	transform: translateX(-50%);
+	margin: 0;
+	padding: 0.5rem 1rem;
+	border-radius: var(--radius-large);
+	background: var(--bg-raised);
+	border: 1px solid var(--border);
+	box-shadow: var(--shadow-flyout);
+	z-index: 5;
+}
+
+button:disabled,
+button[aria-disabled="true"] {
+	opacity: 0.45;
+	cursor: default;
+}
+
+button.primary {
+	border-color: var(--accent);
+	background: var(--accent);
+	color: var(--on-accent);
+}
+
+button.primary:hover {
+	background: var(--accent-hover);
+}
+
+fieldset {
+	display: flex;
+	flex-direction: column;
+	gap: 0.35rem;
+	border: 1px solid var(--border);
+	border-radius: var(--radius-large);
+}
+
+.small-input {
+	width: 3rem;
+}
+
+#split-ranges {
+	width: 12rem;
+}
+
+/* --- Rewriting text (006) --- */
+
+#edit-text-button[aria-pressed="true"] {
+	border-color: var(--accent);
+	background: var(--accent);
+	color: var(--on-accent);
+}
+
+.text-edit-mode .textLayer {
+	/* In edit mode a double click edits a line instead of selecting a word. */
+	user-select: none;
+	cursor: text;
+}
+
+.text-line-outline {
+	position: absolute;
+	border: 1px dashed var(--accent);
+	background: color-mix(in srgb, var(--accent) 8%, transparent);
+	pointer-events: none;
+	z-index: 5;
+}
+
+.text-line-outline.not-editable {
+	border-color: var(--danger);
+	background: color-mix(in srgb, var(--danger) 8%, transparent);
+}
+
+.text-line-editor {
+	position: absolute;
+	box-sizing: border-box;
+	padding: 0 2px;
+	margin: 0;
+	border: 1px solid var(--accent);
+	outline: 2px solid color-mix(in srgb, var(--accent) 40%, transparent);
+	/* The field lies on the white document page: black on white in both modes. */
+	background: #fff;
+	color: #000;
+	line-height: 1;
+	transform-origin: 0 50%;
+	z-index: 6;
+}
+
+.field {
+	display: flex;
+	flex-direction: column;
+	gap: 0.2rem;
+	margin-bottom: 0.6rem;
+}
+
+.split-error {
+	color: var(--danger);
+	font-weight: 600;
+	min-height: 1.2em;
+}
+
+.empty-state {
+	position: absolute;
+	inset: 0;
+	/* Above the empty document area, otherwise it would cover it. */
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	background: var(--bg-canvas);
+}
+
+/* PDFViewer from pdf.js requires an absolutely positioned container. */
+.viewer-container {
+	position: absolute;
+	inset: 0;
+	overflow: auto;
+	background: var(--bg-canvas);
+	outline: none;
+}
+
+.drop-overlay {
+	position: fixed;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.5rem;
+	font-weight: 600;
+	background: var(--accent-soft);
+	border: 4px dashed var(--accent);
+	color: var(--text);
+	box-sizing: border-box;
+	pointer-events: none;
+	z-index: 10;
+}
+
+dialog {
+	border: 1px solid var(--border);
+	border-radius: var(--radius-large);
+	padding: 1.5rem;
+	min-width: 22rem;
+	background: var(--bg-raised);
+	color: var(--text);
+	box-shadow: var(--shadow-dialog);
+}
+
+dialog::backdrop {
+	background: rgb(0 0 0 / 30%);
+}
+
+dialog h2 {
+	margin: 0 0 0.75rem;
+	font-family: "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif;
+	font-size: 1.4rem;
+	font-weight: 600;
+}
+
+#password-input {
+	width: 100%;
+}
+
+/* The main button is first in the HTML (Enter in a form presses the first
+   button), but it is shown on the right, as usual in Windows. */
+.dialog-buttons {
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: flex-start;
+	gap: 0.5rem;
+	margin-top: 1rem;
+}
+
+#password-reason.incorrect {
+	color: var(--danger);
+	font-weight: 600;
+}
+
+/* Place of a change after Undo/Redo (009): a yellow translucent background for about 2 s. */
+.change-highlight {
+	position: absolute;
+	background: rgb(255 213 0 / 45%);
+	outline: 2px solid rgb(240 180 0 / 80%);
+	pointer-events: none;
+	z-index: 6;
+	animation: change-highlight-fade 2s ease-in forwards;
+}
+
+.page.change-highlight-page,
+.thumb.change-highlight-page {
+	outline: 4px solid rgb(240 180 0 / 90%);
+	outline-offset: 2px;
+	animation: change-highlight-fade-outline 2s ease-in forwards;
+}
+
+@keyframes change-highlight-fade {
+	0%,
+	70% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes change-highlight-fade-outline {
+	0%,
+	70% {
+		outline-color: rgb(240 180 0 / 90%);
+	}
+	100% {
+		outline-color: transparent;
+	}
+}
+
+.change-highlight-cover {
+	position: absolute;
+	inset: 0;
+	background: rgb(255 213 0 / 22%);
+	pointer-events: none;
+	z-index: 6;
+	animation: change-highlight-fade 2s ease-in forwards;
+}
+
+/* --- Toolbar, icons and the "⋯" menu (010) — after the general button rules. --- */
+
+/* Toolbar groups separated by a vertical line (010). */
+.toolbar .group + .group {
+	border-left: 1px solid var(--border-strong);
+}
+
+.zoom-controls {
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	margin-left: 0.5rem;
+}
+
+.page-count {
+	color: var(--text-secondary);
+	padding-right: 0.25rem;
+}
+
+/* Ikona z data-icon (src/ui/icons.ts). */
+.icon {
+	width: 18px;
+	height: 18px;
+	flex-shrink: 0;
+	stroke-width: 1.75;
+}
+
+/* Toolbar buttons: no border, border/background only on hover (Windows 11). */
+.toolbar button,
+.panel-tools button,
+.find-bar button {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	border-color: transparent;
+	background: transparent;
+}
+
+.toolbar button:hover,
+.panel-tools button:hover,
+.find-bar button:hover {
+	background: var(--control-hover);
+}
+
+/* A highlighted toolbar button (Save with unsaved changes, 017): the full
+   accent colour also in the toolbar, where buttons are otherwise transparent. */
+.toolbar button.primary {
+	border-color: var(--accent);
+	background: var(--accent);
+	color: var(--on-accent);
+}
+
+.toolbar button.primary:hover {
+	background: var(--accent-hover);
+}
+
+.icon-button {
+	justify-content: center;
+	min-width: 32px;
+	padding: 0.25rem;
+}
+
+.labelled {
+	padding: 0.25rem 0.6rem;
+}
+
+.lock-indicator {
+	color: var(--accent);
+}
+
+.menu {
+	position: absolute;
+	top: calc(var(--toolbar-height) - 4px);
+	right: 0.5rem;
+	display: flex;
+	flex-direction: column;
+	min-width: 15rem;
+	padding: 4px;
+	border: 1px solid var(--border);
+	border-radius: var(--radius-large);
+	background: var(--bg-raised);
+	box-shadow: var(--shadow-flyout);
+	z-index: 21;
+}
+
+.menu button {
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+	width: 100%;
+	min-height: 32px;
+	text-align: left;
+	border: none;
+	background: transparent;
+}
+
+.menu button:hover,
+.menu button:focus-visible {
+	background: var(--control-hover);
+	outline: none;
+}
+
+.menu .shortcut {
+	margin-left: auto;
+	padding-left: 1.5rem;
+	color: var(--text-secondary);
+	font-size: 0.85rem;
+}
+
+.menu-separator {
+	width: 100%;
+	margin: 4px 0;
+	border: none;
+	border-top: 1px solid var(--border);
+}
+
+.menu-group {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+
+.menu-heading {
+	display: block;
+	padding: 0.25rem 0.75rem;
+	color: var(--text-secondary);
+	font-size: 0.85rem;
+}
+
+.menu [role="menuitemradio"][aria-checked="true"] {
+	color: var(--accent);
+	font-weight: 600;
+}
+
+/* Items for a narrower window: in a wide window the buttons are in the toolbar. */
+.menu .overflow-item {
+	display: none;
+}
+
+/* Narrower window (010): first the labels disappear (the name for screen
+   readers stays), then zoom and find move into "⋯". */
+@media (width < 1100px) {
+	.toolbar .label {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+
+	.labelled {
+		min-width: 32px;
+		padding: 0.25rem;
+		justify-content: center;
+	}
+
+	.app-version {
+		display: none;
+	}
+}
+
+@media (width < 980px) {
+	.toolbar .zoom-controls,
+	.toolbar #find-button {
+		display: none;
+	}
+
+	.menu .overflow-item:not([hidden]) {
+		display: flex;
+	}
+}
+
+/* --- Start screen without a document (010) — after the general icon rules. --- */
+
+.welcome {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.75rem;
+	max-width: 26rem;
+	padding: 2.5rem 3rem;
+	border: 2px dashed var(--border-strong);
+	border-radius: 12px;
+	background: var(--bg-surface);
+	text-align: center;
+}
+
+.welcome-icon .icon {
+	width: 48px;
+	height: 48px;
+	stroke-width: 1.25;
+	color: var(--accent);
+}
+
+.welcome-title {
+	margin: 0;
+	font-family: "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif;
+	font-size: 1.6rem;
+	font-weight: 600;
+}
+
+.welcome-text,
+.welcome-note {
+	margin: 0;
+	color: var(--text-secondary);
+}
+
+.welcome-note {
+	font-size: 0.85rem;
+}
+
+#welcome-open {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	min-height: 36px;
+	padding: 0.25rem 1rem;
+}
+
+#welcome-open .shortcut {
+	opacity: 0.8;
+	font-size: 0.85rem;
+}
+
+.welcome-features {
+	margin: 0.5rem 0 0;
+	padding: 0;
+	list-style: none;
+	color: var(--text-secondary);
+	line-height: 1.8;
+}
+
+/* Notification icon by kind (010): information "i", error a warning triangle. */
+.message-icon {
+	display: flex;
+	padding-top: 1px;
+}
+
+.message.info .message-icon-error,
+.message:not(.info) .message-icon-info {
+	display: none;
+}
+
+/* Menu items without an icon (languages, 011) aligned with the others. */
+.menu [data-language-option] {
+	padding-left: calc(0.75rem + 18px + 0.6rem);
+}
+
+/* --- Podpisy (012) --- */
+
+.signature-menu {
+	min-width: 18rem;
+	max-width: min(28rem, calc(100vw - 16px));
+	/* Ten signatures with previews don't fit into a low window: scroll. */
+	max-height: calc(100vh - var(--toolbar-height) - 16px);
+	overflow-y: auto;
+}
+
+.signature-row {
+	display: flex;
+	align-items: center;
+	gap: 2px;
+}
+
+.menu .signature-choose {
+	flex: 1;
+	min-width: 0;
+}
+
+.signature-choose img {
+	width: 6rem;
+	height: 2.25rem;
+	object-fit: contain;
+	flex: none;
+	/* A signature is usually dark: in dark mode it would vanish on the dark menu. */
+	border-radius: var(--radius);
+	background: #fff;
+}
+
+.signature-choose span {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.menu .signature-icon {
+	width: auto;
+	min-width: 32px;
+	justify-content: center;
+	padding: 0.25rem;
+}
+
+.menu [aria-disabled="true"] {
+	color: var(--text-secondary);
+}
+
+/* Preview in the dialog: a checkerboard shows what is transparent. */
+.signature-preview {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 7rem;
+	margin: 0.75rem 0;
+	padding: 0.5rem;
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	color: var(--text-secondary);
+	background-color: #fff;
+	background-image:
+		linear-gradient(45deg, #e6e6e6 25%, transparent 25%),
+		linear-gradient(-45deg, #e6e6e6 25%, transparent 25%),
+		linear-gradient(45deg, transparent 75%, #e6e6e6 75%),
+		linear-gradient(-45deg, transparent 75%, #e6e6e6 75%);
+	background-size: 16px 16px;
+	background-position:
+		0 0,
+		0 8px,
+		8px -8px,
+		-8px 0;
+}
+
+.signature-preview canvas {
+	max-width: 100%;
+	max-height: 10rem;
+}
+
+/* Placing and editing a signature on a page (012). */
+.signature-placing .page {
+	cursor: copy;
+}
+
+.signature-ghost {
+	position: fixed;
+	opacity: 0.75;
+	pointer-events: none;
+	z-index: 30;
+}
+
+.signature-frame {
+	position: absolute;
+	box-sizing: border-box;
+	border: 1px solid var(--accent);
+	outline: 1px dashed color-mix(in srgb, var(--accent) 60%, transparent);
+	outline-offset: 2px;
+	cursor: move;
+	touch-action: none;
+	z-index: 6;
+}
+
+.signature-resize {
+	position: absolute;
+	right: -6px;
+	bottom: -6px;
+	width: 12px;
+	height: 12px;
+	border: 2px solid var(--bg-raised);
+	border-radius: 50%;
+	background: var(--accent);
+	cursor: nwse-resize;
+}
+
+.signature-delete {
+	position: absolute;
+	top: -14px;
+	right: -14px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+	padding: 0;
+	border: 1px solid var(--border);
+	border-radius: 50%;
+	background: var(--bg-raised);
+	box-shadow: var(--shadow-flyout);
+	cursor: pointer;
+}
+
+.signature-delete svg {
+	width: 14px;
+	height: 14px;
+}
+
+/* While dragging, the signature image moves with the frame (as in Acrobat). */
+.signature-drag-image {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0.85;
+	pointer-events: none;
+}
+
+.signature-frame.dragging {
+	cursor: grabbing;
+}
+
+/* About (016): the license text scrolls inside the dialog. */
+.about-dialog {
+	max-width: min(44rem, 90vw);
+}
+
+.about-license-text {
+	max-height: 40vh;
+	overflow: auto;
+	padding: 0.75rem;
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	background: var(--bg);
+	font-size: 0.8rem;
+	white-space: pre-wrap;
+}
