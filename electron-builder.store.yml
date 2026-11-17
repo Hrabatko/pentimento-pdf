@@ -28,11 +28,11 @@ win:
   signAndEditExecutable: true
 
 appx:
-  # From Partner Center → the app → Product identity (owner's Store account).
-  # Placeholders until the app name is reserved in the Store (spec 016,
-  # batch 4); the Store rejects a package whose identity doesn't match.
+  # From Partner Center → the app → Product identity (owner's Store account,
+  # name reserved 2026-11-17); the Store rejects a package whose identity
+  # doesn't match. Not secret: these values are inside the package.
   identityName: Hrabatko.PentimentoPDF
-  publisher: CN=00000000-0000-0000-0000-000000000000
+  publisher: CN=12E86000-8F1F-48B1-A6E2-9CBA7C4A998A
   publisherDisplayName: Hrabatko
   applicationId: PentimentoPDF
   displayName: Pentimento PDF

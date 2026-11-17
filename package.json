@@ -1,7 +1,7 @@
 {
 	"name": "pentimento-pdf",
 	"productName": "Pentimento PDF",
-	"version": "0.12.1",
+	"version": "1.0.0",
 	"private": true,
 	"type": "module",
 	"description": "Bezplatný nástroj pro Windows na úpravy PDF, které bezplatný Adobe Reader neumí.",
