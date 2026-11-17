@@ -4,6 +4,7 @@
 import { execFile } from "node:child_process";
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
+import { createRequire } from "node:module";
 import { join } from "node:path";
 import { promisify } from "node:util";
 import { expect, test } from "@playwright/test";
@@ -104,7 +105,13 @@ test("soubor programu je nezměněný Electron (jinak ho ochrana Windows zabloku
 		createHash("sha256")
 			.update(await readFile(path))
 			.digest("hex");
+	// require("electron") returns the binary's path and downloads it on first
+	// use (Electron 45 installs lazily — a fresh clone has no binary yet).
+	const electronPath: unknown = createRequire(import.meta.url)("electron");
+	if (typeof electronPath !== "string") {
+		throw new Error('require("electron") did not return a path.');
+	}
 	expect(await hash(join(UNPACKED, `${APP_NAME}.exe`))).toBe(
-		await hash(join(ROOT, "node_modules", "electron", "dist", "electron.exe")),
+		await hash(electronPath),
 	);
 });

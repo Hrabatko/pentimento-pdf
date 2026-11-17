@@ -12,6 +12,9 @@ call npm.cmd run build >nul
 if errorlevel 1 goto failed
 call npm.cmd run build:electron >nul
 if errorlevel 1 goto failed
+rem Electron 45 downloads its binary on first use; make sure it is there.
+call node -e "require('electron')" >nul
+if errorlevel 1 goto failed
 
 start "" "%~dp0node_modules\electron\dist\electron.exe" "%~dp0."
 exit /b 0

@@ -18,6 +18,14 @@ npm.cmd ci
 
 In PowerShell use `npm.cmd` instead of `npm` (script execution is disabled by default on Windows Home).
 
+Notes for a fresh clone:
+
+- Electron 45 downloads its binary on first use (not during `npm ci`); `npm.cmd run program`, `spustit.cmd` and the tests trigger it automatically.
+- The test PDFs in `tests/data/` are generated, not versioned: `npm.cmd run testdata` (also the first step of `verify`) before running `npm.cmd test` on its own.
+- Windows Smart App Control may occasionally block a freshly installed development tool (e.g. the linter); building and running the program is not affected.
+
+Verified on 2026-11-17 with a fresh clone from GitHub: `npm ci`, the MSI installer, the Store package, unit tests, lint and the tests of the built program pass.
+
 ## Common commands
 
 | Command                 | What it does                                                                                                      |

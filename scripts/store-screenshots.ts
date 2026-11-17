@@ -232,14 +232,9 @@ async function launch(language: Language, file: string) {
 		}
 	}
 	env["PENTIMENTO_USER_DATA"] = userData;
+	// Without executablePath Playwright uses require("electron"), which
+	// downloads the Electron binary on first use (Electron 45 installs lazily).
 	const app = await electron.launch({
-		executablePath: join(
-			ROOT,
-			"node_modules",
-			"electron",
-			"dist",
-			"electron.exe",
-		),
 		args: [".", `--lang=${language}`, file],
 		cwd: ROOT,
 		env,
