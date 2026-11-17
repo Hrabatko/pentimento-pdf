@@ -39,6 +39,6 @@ Specifikace se staví po dávkách; kroky označené **(dávka N)** půjdou otes
 
 ## Výsledky
 
-| Datum | Verze | Kroky | Výsledek |
-| ----- | ----- | ----- | -------- |
-|       |       |       |          |
+| Datum      | Verze                                         | Kroky | Výsledek               |
+| ---------- | --------------------------------------------- | ----- | ---------------------- |
+| 2026-11-17 | 0.12.1 (rozpracovaná, větev `016-zverejneni`) | 1–12  | Vše prošlo (vlastník). |
