@@ -1,0 +1,46 @@
+# Building the Microsoft Store package (MSIX/AppX, spec 016). Extends the
+# common settings (electron-builder.yml) and differs where the Store differs:
+#   - the Store signs the package on submission, so Windows Smart App Control
+#     trusts it — the program may carry its own icon and file details
+#     (signAndEditExecutable) and use app.asar again;
+#   - "Open with" for PDF is declared in the package manifest
+#     (fileAssociations); a packaged app can't change the default PDF program.
+# Run via `npm.cmd run store` → release/store/Pentimento PDF <version>.appx (its own
+# folder, so that it doesn't overwrite release/win-unpacked of the MSI build).
+extends: ./electron-builder.yml
+
+# Store tiles (installer/appx/, rendered by scripts/generate-icons.ts).
+directories:
+  output: release/store
+  buildResources: installer
+
+asar: true
+
+fileAssociations:
+  - ext: pdf
+    name: PDF
+    description: PDF
+
+win:
+  target:
+    - appx
+  icon: public/icons/icon.ico
+  signAndEditExecutable: true
+
+appx:
+  # From Partner Center → the app → Product identity (owner's Store account).
+  # Placeholders until the app name is reserved in the Store (spec 016,
+  # batch 4); the Store rejects a package whose identity doesn't match.
+  identityName: Hrabatko.PentimentoPDF
+  publisher: CN=00000000-0000-0000-0000-000000000000
+  publisherDisplayName: Hrabatko
+  applicationId: PentimentoPDF
+  displayName: Pentimento PDF
+  languages:
+    - cs-CZ
+    - en-US
+  backgroundColor: transparent
+  # Electron 45 needs Windows 10 1809 or later; tested on Windows 11 24H2.
+  minVersion: 10.0.17763.0
+  maxVersionTested: 10.0.26100.0
+  artifactName: ${productName} ${version}.${ext}

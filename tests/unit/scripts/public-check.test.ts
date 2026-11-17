@@ -20,6 +20,10 @@ describe("kontrola před zveřejněním", () => {
 			text("tests/data/test-data.ts", "export const DATA_FILES = {};"),
 			text("LICENSE", "GNU GENERAL PUBLIC LICENSE"),
 			{ path: "public/icons/icon.ico", bytes: new Uint8Array([0, 0, 1, 0]) },
+			{
+				path: "installer/appx/StoreLogo.png",
+				bytes: new Uint8Array([137, 80]),
+			},
 		];
 		assert.deepEqual(checkPublicFiles(files, TERMS), []);
 	});

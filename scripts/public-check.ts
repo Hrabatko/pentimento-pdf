@@ -34,6 +34,13 @@ const BINARY_ALLOWED: ReadonlySet<string> = new Set([
 	"public/icons/icon.ico",
 ]);
 
+/** Store package tiles rendered from the app icon (scripts/generate-icons.ts). */
+const STORE_TILE = /^installer\/appx\/[A-Za-z0-9_.-]+\.png$/;
+
+function isAllowedBinary(path: string): boolean {
+	return BINARY_ALLOWED.has(path) || STORE_TILE.test(path);
+}
+
 const TEXT_EXTENSIONS =
 	/\.(ts|mts|cts|js|mjs|cjs|json|jsonc|md|html|css|svg|yml|yaml|txt|cmd|ps1|gitignore|gitattributes)$/i;
 
@@ -79,7 +86,7 @@ export function checkPublicFiles(
 			});
 			continue;
 		}
-		if (!isText(path) && !BINARY_ALLOWED.has(path)) {
+		if (!isText(path) && !isAllowedBinary(path)) {
 			violations.push({ path, reason: "binární soubor mimo povolený seznam" });
 			continue;
 		}

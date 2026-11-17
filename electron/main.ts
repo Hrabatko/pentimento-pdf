@@ -220,7 +220,11 @@ if (!app.requestSingleInstanceLock({ files: launchedPaths })) {
 
 	// The same identity as the installer's shortcuts (appId in electron-builder.yml):
 	// pinning to the taskbar and the program's windows then belong to one icon.
-	app.setAppUserModelId(APP_ID);
+	// The Microsoft Store package (016) has its identity from the package itself;
+	// a different one would break its taskbar icon.
+	if (!process.windowsStore) {
+		app.setAppUserModelId(APP_ID);
+	}
 
 	void app.whenReady().then(() => {
 		// No window menu (File, Edit…): the app has its own toolbar.

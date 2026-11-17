@@ -21,6 +21,7 @@
 		"program": "npm run build && npm run build:electron && electron .",
 		"package": "npm run build && npm run build:electron && electron-builder --win --dir",
 		"installer": "npm run build && npm run build:electron && electron-builder --win msi",
+		"store": "npm run build && npm run build:electron && electron-builder --win appx --config electron-builder.store.yml",
 		"typecheck": "tsc --noEmit -p tsconfig.json",
 		"lint": "biome check --error-on-warnings .",
 		"format": "biome check --write .",
@@ -30,7 +31,7 @@
 		"e2e": "playwright test",
 		"public-check": "node scripts/public-check.ts",
 		"test:package": "playwright test --config playwright.package.config.ts",
-		"verify": "npm run testdata && npm run check && npm test && npm run e2e && npm run installer && npm run test:package"
+		"verify": "npm run testdata && npm run check && npm test && npm run e2e && npm run installer && npm run store && npm run test:package"
 	},
 	"dependencies": {
 		"@cantoo/fontkit": "2.0.12",
