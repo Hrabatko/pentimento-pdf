@@ -29,14 +29,16 @@ Jak dostat Pentimento PDF do Microsoft Storu (specifikace [016](../specs/016-zve
 
 ## Snímky obrazovky
 
-Store chce aspoň 1 (doporučeno 3–4) snímky aplikace, 1366 × 768 px nebo větší, PNG. Návrh (program spustit, okno maximalizovat, **použít jen testovací PDF bez osobních údajů**, např. `tests\data\cesky.pdf` nebo `upravy-textu.pdf`):
+Snímky vytvoří `npm.cmd run store:screenshots` (`scripts/store-screenshots.ts`): sestaví program, vytvoří smyšlený ukázkový dokument (nabídka firmy Contoso pro „Klienta A“, česky i anglicky — žádné osobní údaje) a vyfotí skutečný program v rozlišení 1366 × 768 do `release\store\screenshots\`:
 
-1. Otevřený dokument s panelem náhledů (prohlížení a stránky).
-2. Režim „Upravit text“ s otevřeným polem na řádku.
-3. Vložený podpis na stránce (testovací podpis, ne skutečný).
-4. Tmavý režim.
+| Soubor                                      | Co ukazuje                                 |
+| ------------------------------------------- | ------------------------------------------ |
+| `cs-1-viewing.png` / `en-1-viewing.png`     | otevřený dokument s náhledy stránek        |
+| `cs-2-edit-text.png` / `en-2-edit-text.png` | režim „Upravit text“ — přepis celkové ceny |
+| `cs-3-split.png` / `en-3-split.png`         | dialog „Rozdělit dokument“                 |
+| `cs-4-dark.png` / `en-4-dark.png`           | tmavý režim                                |
 
-Snímek okna: klávesy **Alt + PrintScreen** a vložit do Malování, nebo **Win + Shift + S**.
+Do české verze výpisu nahrát `cs-*`, do anglické `en-*` (v tomto pořadí). U příští verze stačí příkaz spustit znovu.
 
 ## Texty do Storu — čeština
 
