@@ -1,0 +1,11 @@
+name: Idea / Nápad
+description: Suggest an improvement / Navrhněte vylepšení
+labels: [idea]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like the program to do? / Co by měl program umět?
+      description: Describe the situation and why it would help / Popište situaci a proč by to pomohlo
+    validations:
+      required: true

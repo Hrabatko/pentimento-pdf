@@ -28,6 +28,7 @@
 		"testdata": "node scripts/generate-test-pdfs.ts",
 		"test": "node --test \"tests/unit/**/*.test.ts\"",
 		"e2e": "playwright test",
+		"public-check": "node scripts/public-check.ts",
 		"test:package": "playwright test --config playwright.package.config.ts",
 		"verify": "npm run testdata && npm run check && npm test && npm run e2e && npm run installer && npm run test:package"
 	},

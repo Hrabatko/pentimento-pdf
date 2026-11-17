@@ -1,0 +1,38 @@
+name: Bug report / Nahlášení chyby
+description: Something doesn't work as expected / Něco nefunguje, jak má
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Never attach confidential documents.** If the problem only shows up with a particular PDF, describe it or create a test PDF without personal data.
+        **Nikdy nepřikládejte důvěrné dokumenty.** Když se problém projeví jen u konkrétního PDF, popište ho, nebo vytvořte testovací PDF bez osobních údajů.
+  - type: textarea
+    id: steps
+    attributes:
+      label: What did you do? / Co jste dělali?
+      description: Steps to reproduce / Postup, jak chybu vyvolat
+      placeholder: |
+        1. Open a PDF / Otevřít PDF
+        2. …
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect, and what happened instead? / Co jste čekali a co se stalo?
+      description: The exact error message helps / Přesné znění chyby pomůže
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Program version / Verze programu
+      description: "⋯ → About / ⋯ → O programu"
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Windows version / Verze Windows
+      placeholder: Windows 11 24H2
