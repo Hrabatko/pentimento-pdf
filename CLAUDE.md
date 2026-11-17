@@ -155,8 +155,8 @@ PRIVACY.md, CONTRIBUTING.md   zásady soukromí a hlášení chyb (česky i angl
 .gitignore, .gitattributes   co git neverzuje; konce řádků LF
 spustit.cmd           běžné spuštění dvojklikem (sestaví a spustí program ze složky, bez instalace; od 014)
 sestavit-instalator.cmd   sestaví instalátor do release/ (014)
-electron-builder.yml  nastavení sestavení programu a instalátoru (014)
-installer/            doplněk instalátoru MSI (msi-project.ts, open-with.ts: Otevřít v programu bez změny výchozího programu)
+electron-builder.yml  nastavení sestavení programu a instalátoru (014); electron-builder.store.yml = balíček pro Microsoft Store (016)
+installer/            doplněk instalátoru MSI (msi-project.ts, open-with.ts: Otevřít v programu bez změny výchozího programu); appx/ = dlaždice balíčku pro Store
 specs/                požadavky (viz výše)
 docs/                 dokumentace pro vývoj: spuštění, závislosti, ruční testy; DEVELOPMENT.md = anglický přehled pro vývojáře (016)
 docs/testovani/       ruční testovací checklisty
