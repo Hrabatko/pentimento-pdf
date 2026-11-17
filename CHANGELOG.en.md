@@ -4,6 +4,7 @@ English translation of [CHANGELOG.md](CHANGELOG.md) (Czech, authoritative). Ever
 
 ## Unreleased
 
+- The internal names of the settings and signature storage changed (the Store version starts with clean data): a work-in-progress version starts with the default theme, language and no saved signatures after updating.
 - New menu item “⋯ → About”: version, publisher, the program's license (GPL-3.0-or-later) and the licenses of the libraries, fonts and data it uses.
 - Fixed: dragging a page thumbnail over the document shortly after opening it or after an edit no longer shows the message “The action failed”.
 

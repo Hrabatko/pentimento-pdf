@@ -4,6 +4,7 @@ Každá dokončená změna se sem zapíše jednou větou z pohledu uživatele. N
 
 ## Nevydáno
 
+- Interní názvy úložiště nastavení a podpisů se změnily (verze ze Storu začíná s čistými daty): rozpracovaná verze po aktualizaci začne s výchozím vzhledem, jazykem a bez uložených podpisů.
 - Nová položka „⋯ → O programu“: verze, vydavatel, licence programu (GPL-3.0-or-later) a licence použitých knihoven, písem a dat.
 - Opraveno: přetažení náhledu stránky přes dokument krátce po otevření nebo po úpravě už nevyvolá hlášku „Akce se nepovedla“.
 

@@ -20,7 +20,7 @@ playwright-report/
 # Test PDFs are created by `npm.cmd run testdata` (verify runs it too) from
 # tests/data/test-data.ts; they differ on every generation (date, password salt).
 # The owner's real documents are kept only in the private archive, never in the
-# public copy (scripts/export-public.ts, scripts/public-check.ts).
+# public project (checked by scripts/public-check.ts).
 tests/data/cesky.pdf
 tests/data/chybejici-znak.pdf
 tests/data/dlouhy-200-stran.pdf

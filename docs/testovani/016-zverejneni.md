@@ -7,7 +7,7 @@ Specifikace se staví po dávkách; kroky označené **(dávka N)** půjdou otes
 | Dávka | Co přináší                                                              | Kroky |
 | ----- | ----------------------------------------------------------------------- | ----- |
 | 1     | Licence, „O programu“, texty pro lidi zvenku, komentáře v kódu anglicky | 1–7   |
-| 2     | Čistá kopie projektu bez historie a bez skutečných dokumentů            | —     |
+| 2     | Čistá kopie projektu bez historie a bez skutečných dokumentů            | 8–12  |
 | 3     | GitHub                                                                  | —     |
 | 4     | Microsoft Store                                                         | —     |
 
@@ -26,6 +26,16 @@ Specifikace se staví po dávkách; kroky označené **(dávka N)** půjdou otes
 | 5   | Otevřít PDF, otočit stránku a hned přetáhnout náhled stránky přes dokument a zpět   | Žádná hláška „Akce se nepovedla“ (opravená chyba)                                                                          | —                   |
 | 6   | Prohlédnout v projektu `README.md`, `README.cs.md`, `PRIVACY.md`, `CONTRIBUTING.md` | Srozumitelné pro cizího člověka; česky i anglicky; nic osobního (jméno, e-mail)                                            | Obsah a licence 4–6 |
 | 7   | Běžná práce: otevřít, upravit text, uložit, vložit podpis                           | Vše funguje jako dřív (překlad komentářů kód nezměnil)                                                                     | —                   |
+
+### Dávka 2 – čistý projekt
+
+| #   | Krok                                                                                     | Očekávaný výsledek                                                                                                                    | Kritérium         |
+| --- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
+| 8   | Otevřít složku `D:\pentimento-pdf-archiv`                                                | Je tam celý dřívější projekt včetně tvých tří dokumentů v `tests\data` (archiv, nikdy se nezveřejní)                                  | Čistá kopie 1     |
+| 9   | V projektu otevřít `tests\data`                                                          | Žádný z tvých dokumentů tam není (jen `test-data.ts` a vygenerovaná testovací PDF)                                                    | Čistá kopie 1     |
+| 10  | Otevřít `%APPDATA%\pentimento-private-terms.txt` (napsat do adresního řádku Průzkumníku) | Seznam výrazů, které se nesmí zveřejnit; případně doplň další (jeden na řádek)                                                        | Čistá kopie 1     |
+| 11  | Spustit `spustit.cmd`, ⋯ → O programu, pak běžná práce                                   | Program funguje; vzhled a jazyk jsou výchozí a podpisy z rozpracované verze nejsou (nové klíče úložiště) — přidej si testovací podpis | Obsah a licence 3 |
+| 12  | Najít v projektu své iniciály (Průzkumník, hledání)                                      | Iniciály nikde v projektu (kromě názvu samotné složky projektu, ten se nezveřejňuje)                                                  | Obsah a licence 3 |
 
 ## Výsledky
 

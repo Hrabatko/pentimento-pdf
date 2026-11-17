@@ -1,7 +1,6 @@
 // Spec 016 – check before publishing (made-up private terms, never real ones).
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { publicFileList } from "../../../scripts/export-public.ts";
 import {
 	checkPublicFiles,
 	type PublicFile,
@@ -68,26 +67,5 @@ describe("kontrola před zveřejněním", () => {
 
 	it("příliš krátké výrazy (méně než 3 znaky) se ignorují", () => {
 		assert.deepEqual(checkPublicFiles([text("a.md", "ab ab")], ["ab"]), []);
-	});
-});
-
-describe("export čisté kopie", () => {
-	it("z tests/data/ jde jen test-data.ts, ostatní soubory beze změny", () => {
-		assert.deepEqual(
-			publicFileList([
-				"LICENSE",
-				"src/core/app-info.ts",
-				"tests/data/Faktura 2026.pdf",
-				"tests/data/test-data.ts",
-				"tests/data/sken.pdf",
-				"tests/e2e/helpers.ts",
-			]),
-			[
-				"LICENSE",
-				"src/core/app-info.ts",
-				"tests/data/test-data.ts",
-				"tests/e2e/helpers.ts",
-			],
-		);
 	});
 });
