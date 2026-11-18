@@ -61,6 +61,7 @@ Kritéria označená **(A)** nejsou přímo z odpovědí vlastníka, ale z chov�
 - Zapamatování otevřených záložek po zavření programu (program začíná prázdně jako Reader).
 - Nastavení „otevírat z Průzkumníku do nového okna“.
 - Zobrazení dvou dokumentů vedle sebe.
+- Přeřazení záložek tažením v liště (rozhodnutí vlastníka 2026-11-18).
 
 ## Nastavení
 
@@ -68,14 +69,15 @@ Kritéria označená **(A)** nejsou přímo z odpovědí vlastníka, ale z chov�
 
 ## Otevřené otázky
 
-1. **Limit:** 10 dokumentů (návrh Claude Code), nebo 20?
-2. **Přeřazení záložek tažením** v liště (jako v Readeru): zahrnout, nebo mimo rozsah?
+Žádné.
 
 ## Poznámky
 
 2026-11-15 (nápad vlastníka): otevírat další PDF jako záložky. Zapsáno jen jako nápad bez milníku.
 
 2026-11-18 (odpovědi vlastníka): záložky nahrazují otevírání dalšího souboru v novém okně (mění pravidlo „v okně jeden dokument“ z 002 a „další soubor v novém okně“ z 013/014); z Průzkumníku vždy do záložky v posledním okně; přetažení záložky ven mimo rozsah; po spuštění začít prázdně; počet záložek omezit pevným limitem (ne jen podle paměti); zavření okna se ptá postupně po záložkách; přetažení víc souborů otevře každý v záložce; staví se po úpravě odstavce (M5, 018).
+
+2026-11-18 (odpovědi vlastníka, doplnění): limit 10 dokumentů; přeřazení záložek tažením se neřeší.
 
 2026-11-18 (technické poznámky Claude Code):
 
