@@ -45,6 +45,7 @@ Priorita: `P1` (nutné) · `P2` (mělo by být) · `P3` (hezké mít)
 | 018 | [Úprava odstavce](018-uprava-odstavce.md)                              | pripraveno              | P1       |
 | 019 | [Obrázky do PDF](019-obrazky-do-pdf.md)                                | pripraveno              | P2       |
 | 020 | [Přidání nového textu](020-pridani-textu.md)                           | pripraveno              | P2       |
+| 021 | [Vlastnosti dokumentu a skryté údaje](021-vlastnosti-dokumentu.md)    | navrh                   | P2       |
 
 ## Roadmapa
 
@@ -147,3 +148,5 @@ Pravidla: milník používá jen specifikace ve stavu `pripraveno`; pozdější 
 2026-11-18 (nápad vlastníka): přidání nového textu (020, etapa 3 přepsání textu) rozepsáno do návrhu (priorita P2); staví se po obrázcích do PDF (M17).
 
 2026-11-18 (rozhodnutí vlastníka): specifikace 020 schválena (stav `pripraveno`) jako milník M18; staví se po obrázcích do PDF (M17).
+
+2026-11-18 (nápad vlastníka): vlastnosti dokumentu a odstranění skrytých údajů (021) rozepsány do návrhu (priorita P2); staví se po přidání textu (M18).
