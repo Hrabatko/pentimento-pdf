@@ -43,6 +43,7 @@ Priorita: `P1` (nutné) · `P2` (mělo by být) · `P3` (hezké mít)
 | 016 | [Zveřejnění (GitHub a Microsoft Store)](016-zverejneni.md)             | rozpracovano            | P2       |
 | 017 | [Viditelné neuložené změny](017-neulozene-zmeny.md)                    | hotovo                  | P2       |
 | 018 | [Úprava odstavce](018-uprava-odstavce.md)                              | pripraveno              | P1       |
+| 019 | [Obrázky do PDF](019-obrazky-do-pdf.md)                                | navrh                   | P2       |
 
 ## Roadmapa
 
@@ -135,3 +136,5 @@ Pravidla: milník používá jen specifikace ve stavu `pripraveno`; pozdější 
 2026-11-18 (rozhodnutí vlastníka): záložky (015) rozepsány do návrhu (priorita P2); stavět se budou po úpravě odstavce (M5).
 
 2026-11-18 (rozhodnutí vlastníka): specifikace 015 schválena (stav `pripraveno`) jako milník M16; staví se po úpravě odstavce (M5).
+
+2026-11-18 (nápad vlastníka): obrázky do PDF (019) rozepsány do návrhu (priorita P2); otevřená otázka podpory HEIC.
