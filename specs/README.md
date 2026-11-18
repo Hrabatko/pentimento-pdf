@@ -72,7 +72,7 @@ Pořadí stavby. Každý milník končí verzí, kterou vlastník (Hrabatko) ote
 | **M17 – Obrázky do PDF**             | Fotky a skeny (JPG, PNG) jako nové stránky nebo nové PDF; A4 nebo podle obrázku, zmenšení, natočení podle EXIF.                                           | 019         |
 | **M18 – Přidání textu**              | Nový text na prázdné místo stránky s volbou písma a formátu; přesun a úprava přidaného textu.                                                             | 020         |
 
-Po zveřejnění (016) se staví úprava odstavce (M5, 018), potom záložky (M16, 015) obrázky do PDF (M17, 019) a přidání textu (M18, 020).
+Po zveřejnění (016) se staví úprava odstavce (M5, 018), potom záložky (M16, 015), obrázky do PDF (M17, 019) a přidání textu (M18, 020).
 
 Pravidla: milník používá jen specifikace ve stavu `pripraveno`; pozdější milníky může vlastník přeřadit.
 
