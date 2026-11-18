@@ -1,6 +1,6 @@
 # 015 – Více dokumentů v záložkách
 
-- **Stav:** navrh
+- **Stav:** pripraveno
 - **Priorita:** P2
 - **Závisí na:** 002 (prohlížení), 003 (ukládání), 014 (program pro Windows, otevírání z Průzkumníku), 017 (neuložené změny)
 
@@ -78,6 +78,8 @@ Kritéria označená **(A)** nejsou přímo z odpovědí vlastníka, ale z chov�
 2026-11-18 (odpovědi vlastníka): záložky nahrazují otevírání dalšího souboru v novém okně (mění pravidlo „v okně jeden dokument“ z 002 a „další soubor v novém okně“ z 013/014); z Průzkumníku vždy do záložky v posledním okně; přetažení záložky ven mimo rozsah; po spuštění začít prázdně; počet záložek omezit pevným limitem (ne jen podle paměti); zavření okna se ptá postupně po záložkách; přetažení víc souborů otevře každý v záložce; staví se po úpravě odstavce (M5, 018).
 
 2026-11-18 (odpovědi vlastníka, doplnění): limit 10 dokumentů; přeřazení záložek tažením se neřeší.
+
+2026-11-18 (rozhodnutí vlastníka): specifikace včetně kritérií označených (A) **schválena**, stav `pripraveno`, milník M16; staví se po úpravě odstavce (M5, 018).
 
 2026-11-18 (technické poznámky Claude Code):
 
