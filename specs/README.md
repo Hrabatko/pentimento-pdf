@@ -42,7 +42,7 @@ Priorita: `P1` (nutné) · `P2` (mělo by být) · `P3` (hezké mít)
 | 015 | [Více dokumentů v záložkách](015-zalozky.md)                           | napad                   | neurčeno |
 | 016 | [Zveřejnění (GitHub a Microsoft Store)](016-zverejneni.md)             | rozpracovano            | P2       |
 | 017 | [Viditelné neuložené změny](017-neulozene-zmeny.md)                    | hotovo                  | P2       |
-| 018 | [Úprava odstavce](018-uprava-odstavce.md)                              | navrh                   | P1       |
+| 018 | [Úprava odstavce](018-uprava-odstavce.md)                              | pripraveno              | P1       |
 
 ## Roadmapa
 
@@ -67,7 +67,7 @@ Pořadí stavby. Každý milník končí verzí, kterou vlastník (Hrabatko) ote
 | **M14 – Neuložené změny**            | Tlačítko Uložit neaktivní bez změn a zvýrazněné po změně; hvězdička v titulku zůstává.                                                                    | 017         |
 | **M15 – Zveřejnění 1.0.0**           | Veřejně pro běžné lidi s Windows: Microsoft Store (MSIX), kód na GitHubu pod GPL-3.0-or-later, vydavatel „Hrabatko“.                                      | 016         |
 
-Odloženo (bez milníku): záložky (015, nápad); úprava odstavce (M5) až po zveřejnění.
+Odloženo (bez milníku): záložky (015, nápad). Úprava odstavce (M5, 018) je další po zveřejnění (016).
 
 Pravidla: milník používá jen specifikace ve stavu `pripraveno`; pozdější milníky může vlastník přeřadit.
 
@@ -128,3 +128,5 @@ Pravidla: milník používá jen specifikace ve stavu `pripraveno`; pozdější 
 2026-11-17 (rozhodnutí vlastníka): specifikace 016 schválena (stav `pripraveno`) jako milník M15 — první veřejná verze 1.0.0; staví se hned, před úpravou odstavce (M5).
 
 2026-11-18 (rozhodnutí vlastníka): úprava odstavce (M5) se rozpracovává jako samostatná specifikace 018 (stav `navrh`); 006 zůstává uzavřená po etapě 1.
+
+2026-11-18 (rozhodnutí vlastníka): specifikace 018 schválena (stav `pripraveno`) jako milník M5; staví se po dokončení 016, až vlastník řekne.

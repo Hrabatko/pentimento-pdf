@@ -1,6 +1,6 @@
 # 018 – Úprava odstavce
 
-- **Stav:** navrh
+- **Stav:** pripraveno
 - **Priorita:** P1
 - **Závisí na:** 006 (přepsání textu, etapa 1), 007 (text ve vnořených objektech), 009 (Zpět/Znovu ukáže změnu)
 
@@ -94,6 +94,8 @@ Kritéria označená **(A)** nejsou přímo z odpovědí vlastníka, ale z chov�
 2026-11-18 (odpovědi vlastníka, první kolo): samostatná specifikace 018 (006 zůstává uzavřená); odstavec pozná program sám; dvojklik upraví celý odstavec, jednořádkový text jako dosud; Enter = nový řádek, potvrzení klikem mimo nebo Ctrl+Enter, Esc zruší; delší odstavec se protáhne dolů bez posunu obsahu pod ním, s upozorněním na překryv; zarovnání se zachová včetně do bloku; neupravená slova si ponechají formát, nový text převezme formát souseda; zalamuje se jen u mezer, spojovníky na konci řádků se spojí; vlastník dodá 2–3 skutečné dokumenty k ručnímu testu.
 
 2026-11-18 (odpovědi vlastníka, druhé kolo): položka seznamu = samostatný odstavec se zalomením za odrážkou; Alt+dvojklik zachová úpravu jednoho řádku jako záchranu; mezera po Enteru jako mezera mezi odstavci v dokumentu, jinak jako řádkování; skutečné dokumenty vlastník dodá u počítače.
+
+2026-11-18 (rozhodnutí vlastníka): specifikace včetně kritérií označených (A) **schválena**, stav `pripraveno`, milník M5. Implementace začne, až bude vlastník u počítače a řekne (po dokončení 016).
 
 2026-11-18 (technické poznámky Claude Code):
 
