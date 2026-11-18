@@ -21,6 +21,8 @@ Jak dostat Pentimento PDF do Microsoft Storu (specifikace [016](../specs/016-zve
 6. **Schválení** trvá obvykle 1–3 pracovní dny. Když Store balíček odmítne, pošli Claude Code přesný text důvodu; záložní cesta je SignPath (viz specifikace 016).
 7. Po schválení **Claude Code** doplní do README odkaz do Storu a vlastník projde ruční test programu ze Storu (`docs/testovani/016-zverejneni.md`).
 
+**Další verze** (oprava i nová funkce) se do Storu dostávají postupem v [`docs/vyvoj.md`, oddíl „Vydání verze“](vyvoj.md#vydání-verze).
+
 ## Odkazy pro formulář
 
 - Web / zdrojový kód: <https://github.com/Hrabatko/pentimento-pdf>

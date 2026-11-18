@@ -104,10 +104,47 @@ Git není záloha mimo počítač: historie je ve skryté složce `.git` uvnitř
 
 ## Vydání verze
 
-Každý dokončený milník (po ručním testu vlastníka a sloučení do `main`) dostane novou verzi; čísla jdou podle pořadí vydání, ne podle čísel milníků.
+Každý dokončený milník (po ručním testu vlastníka a sloučení do `main`) dostane novou verzi. Od 1.0.0 (016) vychází každá verze v Microsoft Storu; uživatelé ji dostanou automaticky přes Store. Kroky označené **(vlastník)** dělá vlastník sám (jeho účet v Partner Center); ostatní dělá Claude Code.
 
-1. V `CHANGELOG.md` přesunout položky z „Nevydáno“ pod nový nadpis `### X.Y.0 – Název (Mn)`; pod „Nevydáno“ zůstane „Zatím nic.“
-2. Změnit číslo verze na všech místech: `package.json`, `package-lock.json` (u `pentimento-pdf`, dvakrát nahoře) a `src/core/app-info.ts` (`APP_VERSION`, zobrazuje ji aplikace); případně stav v `README.md`.
-3. `npm.cmd run verify`, commit „Vydání X.Y.0 – …“ a značka `git tag -a vX.Y.0 -m "…"`.
+### Číslo verze
 
-K vydané verzi se jde vrátit podle značky (`git tag` je vypíše). První značka je `v0.5.0`; starší verze vznikly před zavedením gitu a značku nemají.
+Tvar `X.Y.Z` (sémantické verzování):
+
+- **oprava chyby** bez nové funkce → zvýší se poslední číslo (1.0.0 → **1.0.1**);
+- **nová funkce** (milník) → zvýší se prostřední číslo a poslední se vynuluje (1.0.1 → **1.1.0**);
+- **velká změna**, kvůli které se program chová jinak (např. konec podpory starších dat) → první číslo (→ 2.0.0); jen po rozhodnutí vlastníka.
+
+Plán podle roadmapy: úprava odstavce (M5) = 1.1.0, záložky (M16) = 1.2.0. Balíček pro Store má verzi o čtyřech číslech, electron-builder z `X.Y.Z` udělá `X.Y.Z.0` (Store vyžaduje poslední číslo 0). Každá verze nahraná do Storu musí být vyšší než předchozí — stejné číslo dvakrát nejde.
+
+### 1. Příprava (Claude Code)
+
+1. **Změny:** v `CHANGELOG.md` přesunout položky z „Nevydáno“ pod nový nadpis `### X.Y.Z – Název (Mn)`; pod „Nevydáno“ zůstane „Zatím nic.“ Totéž v anglickém `CHANGELOG.en.md`.
+2. **Číslo verze** na všech místech: `package.json`, `package-lock.json` (u `pentimento-pdf`, dvakrát nahoře) a `src/core/app-info.ts` (`APP_VERSION`, zobrazuje ho „⋯ → O programu“). Shodu hlídá test.
+3. **Texty pro Store:** do [`docs/microsoft-store.md`](microsoft-store.md) doplnit „Novinky ve verzi X.Y.Z“ česky i anglicky (jedna až tři věty z CHANGELOGu). Když se změnil vzhled nebo přibyla viditelná funkce, nové snímky obrazovky: `npm.cmd run store:screenshots`; jinak se staré nechají.
+4. **Ověření:** `npm.cmd run verify` — sestaví i instalátor MSI a balíček pro Store `release\store\Pentimento PDF X.Y.Z.appx` a otestuje je.
+5. **Commit** „Vydání X.Y.Z – …“ a značka `git tag -a vX.Y.Z -m "…"`.
+6. **GitHub:** `node scripts/public-check.ts` musí projít; potom **jen s výslovným souhlasem vlastníka** nahrát `main` i značku (`git push origin main` a `git push origin vX.Y.Z`).
+
+### 2. Odeslání do Storu (vlastník)
+
+Přesné názvy tlačítek v Partner Center se mohou lišit.
+
+1. <https://partner.microsoft.com/dashboard> → **Apps and games** → **Pentimento PDF** → u posledního odeslání **Update** (založí nové odeslání jako kopii předchozího — vyplněné údaje zůstanou).
+2. **Packages:** nahrát nový `release\store\Pentimento PDF X.Y.Z.appx` a starý balíček ze seznamu odebrat.
+3. **Store listings:** v češtině i angličtině vyplnit **What's new in this version** (text z `docs/microsoft-store.md`); případně vyměnit snímky obrazovky.
+4. Ostatní části (cena, vlastnosti, věková kategorie, `runFullTrust`) se nemění — jen zkontrolovat, že u nich svítí „Complete“.
+5. **Submit for certification.** Schválení trvá obvykle 1–3 pracovní dny. Když Store balíček odmítne, pošli Claude Code přesný text důvodu.
+
+### 3. Po schválení
+
+1. Store novou verzi uživatelům nabídne a nainstaluje sám (zpravidla do jednoho dne od zveřejnění; ručně: Microsoft Store → Knihovna → Získat aktualizace).
+2. **(vlastník) Krátký test aktualizace:** v programu ze Storu „⋯ → O programu“ ukazuje novou verzi, uložené podpisy i nastavení (vzhled, jazyk) zůstaly a nová funkce funguje.
+3. Claude Code zapíše výsledek do checklistu milníku v `docs/testovani/` a specifikaci přepne na `hotovo`.
+
+### Oprava chyby ve vydané verzi
+
+Když se ve verzi ze Storu najde chyba: oprava ve vlastní větvi (např. `oprava-…`) s testem, který chybu zachytí, ruční test vlastníka, sloučení do `main` a vydání s vyšším posledním číslem (např. 1.1.1) stejným postupem. Rozpracovaný milník v jiné větvi se tím nezdržuje.
+
+### Značky
+
+K vydané verzi se jde vrátit podle značky (`git tag` je vypíše). V novém gitu (od 2026-11-17, 016) je první značka `v1.0.0`; značky starších verzí (`v0.5.0`–`v0.12.1`) jsou jen v soukromém archivu `D:\pentimento-pdf-archiv`.
