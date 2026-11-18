@@ -129,3 +129,5 @@ Kritéria označená **(A)** nejsou z odpovědí vlastníka, ale z chování Ado
 - Příznak: po přepsání řádku na text se znaky, které dokument dosud nepoužil (např. „Z“, „K“), se tato písmena v čtečce kreslila přes sebe; hledání je četlo rozdělené („Z K OUSKA“).
 - Příčina: PowerPoint u jednoduchých písem TrueType (Times New Roman) zapisuje do tabulky šířek u nepoužitých znaků nulu, i když tvar znaku v písmu je. Aplikace znak zapsala původním písmem a čtečka ho posunula o nulovou šířku.
 - Oprava: znak, který dokument tímto písmem ještě nepoužil a má v tabulce šířek nulu, se bere jako chybějící → řádek se zapíše náhradním písmem (s upozorněním). Test `tests/unit/text/text-edit.test.ts` („znak s nulovou šířkou…“) s uměle vytvořeným `nulova-sirka.pdf` chybu před opravou zachytil.
+
+2026-11-18 (rozhodnutí vlastníka): etapa 2 (úprava odstavce, M5) má vlastní specifikaci [018](018-uprava-odstavce.md); tato specifikace zůstává uzavřená po etapě 1.
