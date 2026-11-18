@@ -25,7 +25,7 @@ Kritéria označená **(A)** nejsou přímo z odpovědí vlastníka, ale z chov�
 
 - [ ] Program přijme obrázky JPG (`.jpg`, `.jpeg`) a PNG (`.png`), včetně průhledných PNG (průhledné místo je na stránce bílé). **(A)**
 - [ ] Soubor, který není podporovaný obrázek (nebo je poškozený), program odmítne s hláškou s názvem souboru; ostatní vybrané obrázky se vloží. **(A)**
-- [ ] HEIC (fotky z iPhonu) — viz otevřená otázka 1.
+- [ ] U fotky HEIC (`.heic`, `.heif` — iPhone) hláška navíc poradí, jak ji získat jako JPG (např. v iPhonu Nastavení → Fotoaparát → Formáty → „Nejvíce kompatibilní“).
 
 ### Vložení do otevřeného dokumentu
 
@@ -68,7 +68,7 @@ Kritéria označená **(A)** nejsou přímo z odpovědí vlastníka, ale z chov�
 - Úpravy obrázku: ořez, vyrovnání nakřivo vyfoceného papíru, zesvětlení, převod na černobílý.
 - Komprese existujících PDF (mimo rozsah projektu, 2026-11-05).
 - Skenování přímo ze skeneru nebo z fotoaparátu.
-- Další formáty (GIF, BMP, TIFF, WebP) — případně později.
+- HEIC (fotky z iPhonu) a další formáty (GIF, BMP, TIFF, WebP) — rozhodnutí vlastníka 2026-11-18, viz Poznámky.
 - Export stránek PDF do obrázků.
 
 ## Nastavení
@@ -77,20 +77,16 @@ Kritéria označená **(A)** nejsou přímo z odpovědí vlastníka, ale z chov�
 
 ## Otevřené otázky
 
-1. **HEIC (fotky z iPhonu):** vlastník chce podporu (2026-11-18), ale potřebuje novou knihovnu. Zjištění Claude Code (k ověření před schválením):
-   - Windows ani Electron (Chromium) HEIC samy nečtou; Windows jen s doplňkem z Microsoft Storu.
-   - Zavedené knihovny pro čtení HEIC stojí na `libheif`, která má licenci **LGPL-3.0** — podle pravidel projektu jen s výslovným souhlasem vlastníka (s licencí programu GPL-3.0 je slučitelná).
-   - HEIC je komprese HEVC, na kterou jsou **patenty** (proto je rozšíření HEVC ve Windows placené); šíření vlastního dekodéru ve Storu může být právně sporné.
-   - iPhone při přenosu fotek do Windows (kabelem, e-mailem, přes většinu aplikací) obvykle sám převede fotku na JPG; v Nastavení → Fotoaparát → Formáty jde zvolit „Nejvíce kompatibilní“ (JPG).
-
-   Možnosti: (A) HEIC zatím ne, v programu jen srozumitelná hláška s radou, jak fotku z iPhonu získat jako JPG; (B) prověřit licenci a patenty podrobně a rozhodnout až potom.
+Žádné.
 
 ## Poznámky
 
-2026-11-18 (odpovědi vlastníka, první kolo): obojí — vložení obrázků do dokumentu i nové PDF z obrázků; formáty JPG, PNG a HEIC (HEIC viz otevřená otázka 1); velikost stránky volbou v dialogu, výchozí A4, jinak podle obrázku; velké fotky zmenšit s volbou „zachovat původní kvalitu“; každý obrázek jedna stránka; natočení podle EXIF; OCR se nespouští samo.
+2026-11-18 (odpovědi vlastníka, první kolo): obojí — vložení obrázků do dokumentu i nové PDF z obrázků; formáty JPG, PNG a HEIC (HEIC nakonec ne, viz níže); velikost stránky volbou v dialogu, výchozí A4, jinak podle obrázku; velké fotky zmenšit s volbou „zachovat původní kvalitu“; každý obrázek jedna stránka; natočení podle EXIF; OCR se nespouští samo.
+
+2026-11-18 (rozhodnutí vlastníka): **HEIC se neřeší.** Důvody (zjištění Claude Code, podrobně neověřeno): Windows ani Electron HEIC samy nečtou; zavedené knihovny stojí na `libheif` s licencí LGPL-3.0; na kompresi HEVC jsou patenty (rozšíření HEVC ve Windows je placené), takže šíření dekodéru ve Storu může být sporné; iPhone při přenosu do Windows fotky obvykle sám převede na JPG. Program u HEIC jen poradí, jak fotku získat jako JPG.
 
 2026-11-18 (technické poznámky Claude Code):
 
 - Vložení obrázku do PDF umí stávající `@cantoo/pdf-lib` (`embedJpg`, `embedPng`); rozpoznání typu souboru už je v `src/core/signature/signature-image.ts` (012). Zmenšení a natočení podle EXIF jde v rozhraní přes vestavěné API prohlížeče (`createImageBitmap` s `imageOrientation: "from-image"`, `OffscreenCanvas`) — bez nové knihovny. Čtení DPI a orientace z hlavičky souboru patří do jádra (testovatelné v Node.js).
 - „Otevřít v programu“ u obrázků: doplnit do registru v instalátoru MSI (`installer/open-with.ts`) a do `fileAssociations` balíčku pro Store; ověřit, že tím program nepřebere výchozí program pro obrázky.
-- Odhad: 2–3 dávky — (1) jádro: obrázek → stránka (A4 / podle obrázku, zmenšení, EXIF) a „Vložit z obrázku“, (2) nové PDF z obrázků a otevírání z Průzkumníku, (3) případně HEIC.
+- Odhad: 2 dávky — (1) jádro: obrázek → stránka (A4 / podle obrázku, zmenšení, EXIF) a „Vložit z obrázku“, (2) nové PDF z obrázků a otevírání z Průzkumníku.

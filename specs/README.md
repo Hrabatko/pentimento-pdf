@@ -137,4 +137,4 @@ Pravidla: milník používá jen specifikace ve stavu `pripraveno`; pozdější 
 
 2026-11-18 (rozhodnutí vlastníka): specifikace 015 schválena (stav `pripraveno`) jako milník M16; staví se po úpravě odstavce (M5).
 
-2026-11-18 (nápad vlastníka): obrázky do PDF (019) rozepsány do návrhu (priorita P2); otevřená otázka podpory HEIC.
+2026-11-18 (nápad vlastníka): obrázky do PDF (019) rozepsány do návrhu (priorita P2); HEIC se neřeší.
