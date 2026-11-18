@@ -1,6 +1,6 @@
 # 020 – Přidání nového textu
 
-- **Stav:** navrh
+- **Stav:** pripraveno
 - **Priorita:** P2
 - **Závisí na:** 006 (přepsání textu), 018 (úprava odstavce), 010 (vzhled)
 
@@ -70,6 +70,8 @@ Kritéria označená **(A)** nejsou přímo z odpovědí vlastníka, ale z chov�
 ## Poznámky
 
 2026-11-18 (odpovědi vlastníka): tlačítko „Přidat text“ a klik na místo; výběr písem (bezpatkové, patkové, písma dokumentu se všemi znaky); velikost, barva, tučné, kurzíva; víc řádků přes Enter, šířka podle textu; přidaný text jde znovu upravit i přesunout tažením; výchozí formát podle nejbližšího textu na stránce; staví se po obrázcích do PDF (M17) jako milník M18.
+
+2026-11-18 (rozhodnutí vlastníka): specifikace včetně kritérií označených (A) **schválena**, stav `pripraveno`, milník M18; staví se po obrázcích do PDF (M17).
 
 2026-11-18 (technické poznámky Claude Code):
 
