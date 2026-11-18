@@ -1,6 +1,6 @@
 # 019 – Obrázky do PDF
 
-- **Stav:** navrh
+- **Stav:** pripraveno
 - **Priorita:** P2
 - **Závisí na:** 003 (práce se stránkami, Vložit), 004 (sloučení), 012 (načtení obrázku podpisu), 014 (otevírání z Průzkumníku)
 
@@ -84,6 +84,8 @@ Kritéria označená **(A)** nejsou přímo z odpovědí vlastníka, ale z chov�
 2026-11-18 (odpovědi vlastníka, první kolo): obojí — vložení obrázků do dokumentu i nové PDF z obrázků; formáty JPG, PNG a HEIC (HEIC nakonec ne, viz níže); velikost stránky volbou v dialogu, výchozí A4, jinak podle obrázku; velké fotky zmenšit s volbou „zachovat původní kvalitu“; každý obrázek jedna stránka; natočení podle EXIF; OCR se nespouští samo.
 
 2026-11-18 (rozhodnutí vlastníka): **HEIC se neřeší.** Důvody (zjištění Claude Code, podrobně neověřeno): Windows ani Electron HEIC samy nečtou; zavedené knihovny stojí na `libheif` s licencí LGPL-3.0; na kompresi HEVC jsou patenty (rozšíření HEVC ve Windows je placené), takže šíření dekodéru ve Storu může být sporné; iPhone při přenosu do Windows fotky obvykle sám převede na JPG. Program u HEIC jen poradí, jak fotku získat jako JPG.
+
+2026-11-18 (rozhodnutí vlastníka): specifikace včetně kritérií označených (A) **schválena**, stav `pripraveno`, milník M17; staví se po záložkách (M16).
 
 2026-11-18 (technické poznámky Claude Code):
 

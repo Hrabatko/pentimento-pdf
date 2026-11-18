@@ -43,7 +43,7 @@ Priorita: `P1` (nutné) · `P2` (mělo by být) · `P3` (hezké mít)
 | 016 | [Zveřejnění (GitHub a Microsoft Store)](016-zverejneni.md)             | rozpracovano            | P2       |
 | 017 | [Viditelné neuložené změny](017-neulozene-zmeny.md)                    | hotovo                  | P2       |
 | 018 | [Úprava odstavce](018-uprava-odstavce.md)                              | pripraveno              | P1       |
-| 019 | [Obrázky do PDF](019-obrazky-do-pdf.md)                                | navrh                   | P2       |
+| 019 | [Obrázky do PDF](019-obrazky-do-pdf.md)                                | pripraveno              | P2       |
 
 ## Roadmapa
 
@@ -68,8 +68,9 @@ Pořadí stavby. Každý milník končí verzí, kterou vlastník (Hrabatko) ote
 | **M14 – Neuložené změny**            | Tlačítko Uložit neaktivní bez změn a zvýrazněné po změně; hvězdička v titulku zůstává.                                                                    | 017         |
 | **M15 – Zveřejnění 1.0.0**           | Veřejně pro běžné lidi s Windows: Microsoft Store (MSIX), kód na GitHubu pod GPL-3.0-or-later, vydavatel „Hrabatko“.                                      | 016         |
 | **M16 – Záložky**                    | Víc dokumentů v jednom okně jako záložky (nejvýš 10), otevírání z Průzkumníku do záložky.                                                                 | 015         |
+| **M17 – Obrázky do PDF**             | Fotky a skeny (JPG, PNG) jako nové stránky nebo nové PDF; A4 nebo podle obrázku, zmenšení, natočení podle EXIF.                                           | 019         |
 
-Po zveřejnění (016) se staví úprava odstavce (M5, 018), potom záložky (M16, 015).
+Po zveřejnění (016) se staví úprava odstavce (M5, 018), potom záložky (M16, 015) a obrázky do PDF (M17, 019).
 
 Pravidla: milník používá jen specifikace ve stavu `pripraveno`; pozdější milníky může vlastník přeřadit.
 
@@ -138,3 +139,5 @@ Pravidla: milník používá jen specifikace ve stavu `pripraveno`; pozdější 
 2026-11-18 (rozhodnutí vlastníka): specifikace 015 schválena (stav `pripraveno`) jako milník M16; staví se po úpravě odstavce (M5).
 
 2026-11-18 (nápad vlastníka): obrázky do PDF (019) rozepsány do návrhu (priorita P2); HEIC se neřeší.
+
+2026-11-18 (rozhodnutí vlastníka): specifikace 019 schválena (stav `pripraveno`) jako milník M17; staví se po záložkách (M16).
