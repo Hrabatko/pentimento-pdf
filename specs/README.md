@@ -39,7 +39,7 @@ Priorita: `P1` (nutné) · `P2` (mělo by být) · `P3` (hezké mít)
 | 012 | [Vložení podpisu](012-podpis.md)                                       | hotovo                  | P2       |
 | 013 | [Instalace jako aplikace (PWA)](013-instalace.md)                      | hotovo (nahradí ji 014) | P2       |
 | 014 | [Klasický instalátor (samostatný program)](014-klasicky-instalator.md) | hotovo                  | P2       |
-| 015 | [Více dokumentů v záložkách](015-zalozky.md)                           | napad                   | neurčeno |
+| 015 | [Více dokumentů v záložkách](015-zalozky.md)                           | navrh                   | P2       |
 | 016 | [Zveřejnění (GitHub a Microsoft Store)](016-zverejneni.md)             | rozpracovano            | P2       |
 | 017 | [Viditelné neuložené změny](017-neulozene-zmeny.md)                    | hotovo                  | P2       |
 
@@ -125,3 +125,5 @@ Pravidla: milník používá jen specifikace ve stavu `pripraveno`; pozdější 
 2026-11-17 (rozhodnutí vlastníka): zveřejnění (016) se staví hned, před úpravou odstavce (M5); specifikace přepsána do návrhu (běžní lidé s Windows, Microsoft Store, GPL-3.0-or-later, vydavatel „Hrabatko“). Milník se přidělí po schválení.
 
 2026-11-17 (rozhodnutí vlastníka): specifikace 016 schválena (stav `pripraveno`) jako milník M15 — první veřejná verze 1.0.0; staví se hned, před úpravou odstavce (M5).
+
+2026-11-18 (rozhodnutí vlastníka): záložky (015) rozepsány do návrhu (priorita P2); stavět se budou po úpravě odstavce (M5).
