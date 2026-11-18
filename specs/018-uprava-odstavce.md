@@ -26,12 +26,15 @@ Kritéria označená **(A)** nejsou přímo z odpovědí vlastníka, ale z chov�
 - [ ] Za odstavec se berou po sobě jdoucí řádky jednoho sloupce se stejným písmem a velikostí základního textu, společným levým okrajem (u zarovnání vpravo nebo na střed pravým okrajem nebo středem) a pravidelným řádkováním. Větší mezera mezi řádky, jiná velikost písma nebo odsazení dalšího odstavce ho ukončí. **(A)**
 - [ ] Text ve vedlejším sloupci na stejné výšce do odstavce nepatří.
 - [ ] Jednořádkový text (nadpis, číslo, buňka tabulky) se upravuje jako jeden řádek, stejně jako v etapě 1.
+- [ ] Položka seznamu s odrážkou nebo číslem je samostatný odstavec: odrážka (číslo) zůstane na místě a text se zalamuje na odsazení za ní. Celý seznam se jako jeden blok neupravuje. **(A)**
+- [ ] Alt+dvojklik upraví jen jeden řádek jako v etapě 1, i když je součástí odstavce (záchrana, když program odstavec rozpozná špatně). Nápověda tlačítka „Upravit text“ tuto možnost zmíní.
 
 ### Úprava
 
 - [ ] Dvojklik na odstavec ho na místě změní ve víceřádkové pole se stejnou šířkou, písmem a řádkováním. Kurzor je tam, kam uživatel klikl. **(A)**
 - [ ] Při psaní se text v poli průběžně zalamuje na šířku odstavce, takže je vidět, jak bude vypadat. **(A)**
 - [ ] Enter vloží nový řádek (začne nový odstavec uvnitř upravovaného bloku). Klik mimo pole nebo Ctrl+Enter úpravu potvrdí, Esc ji zruší a nic nezmění. **(A)**
+- [ ] Mezera mezi odstavci vzniklými Enterem je stejná jako mezera mezi odstavci v okolí v dokumentu, pokud ji program pozná (sousední odstavec stejného písma ve stejném sloupci); jinak je stejná jako řádkování.
 - [ ] Po potvrzení je starý text odstavce ze stránky odstraněný (ani skrytý v souboru nezůstane) a nový text je zalomený do řádků na šířku původního odstavce: první řádek začíná na stejném místě a řádkování, barva i velikost zůstávají.
 - [ ] Hledání (Ctrl+F) a kopírování najdou nový text jako souvislý text (slova na konci řádků se nerozdělí).
 - [ ] Prázdné pole po potvrzení odstavec ze stránky odstraní. **(A)**
@@ -75,7 +78,7 @@ Kritéria označená **(A)** nejsou přímo z odpovědí vlastníka, ale z chov�
 - Změna šířky odstavce, písma, velikosti nebo barvy ručně (tučné, kurzíva tlačítkem).
 - Přidání nového textového bloku na prázdné místo (006, případná etapa 3).
 - Úprava tabulek jako celku (sloupce, řádky tabulky).
-- Odrážky a číslované seznamy jako struktura (viz otevřené otázky).
+- Seznamy jako struktura: přidání nebo přečíslování položek, změna odrážek.
 - Text ve skenech, anotacích a formulářích (jako v 006).
 
 ## Nastavení
@@ -84,19 +87,16 @@ Kritéria označená **(A)** nejsou přímo z odpovědí vlastníka, ale z chov�
 
 ## Otevřené otázky
 
-Druhé kolo otázek (2026-11-18), musí se zodpovědět před stavem `pripraveno`:
-
-1. **Odrážky a číslované seznamy:** brát každou položku seznamu jako samostatný odstavec (s odsazením za odrážkou)? Nebo celý seznam jako jeden blok?
-2. **Výběr jednoho řádku:** má zůstat možnost upravit jen jeden řádek odstavce, jako dnes (např. Alt+dvojklik), pro případ, že rozpoznání odstavce selže?
-3. **Mezery mezi odstavci:** když uživatel uvnitř bloku stiskne Enter, mezera mezi novými odstavci = stejná jako řádkování, nebo jako mezera mezi odstavci v dokumentu (pokud ji program pozná)?
-4. **Skutečné dokumenty:** vlastník dodá 2–3 PDF s odstavci bez citlivých údajů (např. export z Wordu, dopis); nebudou součástí projektu, použijí se jen k ručnímu testu.
+- **Skutečné dokumenty:** vlastník dodá 2–3 PDF s odstavci bez citlivých údajů (např. export z Wordu, dopis), až bude u počítače. Nebudou součástí projektu (nepatří do `tests/data/` ani do gitu); použijí se jen k ručnímu testu, zjištění se zapíšou sem. Neblokuje schválení.
 
 ## Poznámky
 
 2026-11-18 (odpovědi vlastníka, první kolo): samostatná specifikace 018 (006 zůstává uzavřená); odstavec pozná program sám; dvojklik upraví celý odstavec, jednořádkový text jako dosud; Enter = nový řádek, potvrzení klikem mimo nebo Ctrl+Enter, Esc zruší; delší odstavec se protáhne dolů bez posunu obsahu pod ním, s upozorněním na překryv; zarovnání se zachová včetně do bloku; neupravená slova si ponechají formát, nový text převezme formát souseda; zalamuje se jen u mezer, spojovníky na konci řádků se spojí; vlastník dodá 2–3 skutečné dokumenty k ručnímu testu.
 
+2026-11-18 (odpovědi vlastníka, druhé kolo): položka seznamu = samostatný odstavec se zalomením za odrážkou; Alt+dvojklik zachová úpravu jednoho řádku jako záchranu; mezera po Enteru jako mezera mezi odstavci v dokumentu, jinak jako řádkování; skutečné dokumenty vlastník dodá u počítače.
+
 2026-11-18 (technické poznámky Claude Code):
 
 - Navazuje na jádro etapy 1 (`src/core/text/`): řádky z `text-lines.ts` se seskupí do odstavců; přepsání odstraní operátory všech řádků odstavce a zapíše nové řádky v jednom `q … BT … ET Q` s posunem `TD` podle řádkování. Zarovnání do bloku přes mezery mezi slovy (`Tw` u jednobajtových písem, jinak posuny v `TJ`).
-- Rozpoznání odstavce je heuristika; PDF odstavce neobsahuje. Riziko: dokumenty z různých programů. Proto ruční test na skutečných dokumentech a možnost úpravy po řádcích jako záchrana (otevřená otázka 2).
+- Rozpoznání odstavce je heuristika; PDF odstavce neobsahuje. Riziko: dokumenty z různých programů. Proto ruční test na skutečných dokumentech a úprava po řádcích (Alt+dvojklik) jako záchrana.
 - Úprava je víc práce než etapa 1; navrhuji stavět po dávkách: (1) rozpoznání a orámování odstavce, (2) úprava a zalamování textu jedním formátem, (3) smíšené formátování a náhradní písmo po úsecích, (4) zarovnání do bloku, spojovníky a upozornění na překryv.
