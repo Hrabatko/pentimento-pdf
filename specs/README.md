@@ -39,9 +39,13 @@ Priorita: `P1` (nutné) · `P2` (mělo by být) · `P3` (hezké mít)
 | 012 | [Vložení podpisu](012-podpis.md)                                       | hotovo                  | P2       |
 | 013 | [Instalace jako aplikace (PWA)](013-instalace.md)                      | hotovo (nahradí ji 014) | P2       |
 | 014 | [Klasický instalátor (samostatný program)](014-klasicky-instalator.md) | hotovo                  | P2       |
-| 015 | [Více dokumentů v záložkách](015-zalozky.md)                           | napad                   | neurčeno |
+| 015 | [Více dokumentů v záložkách](015-zalozky.md)                           | pripraveno              | P2       |
 | 016 | [Zveřejnění (GitHub a Microsoft Store)](016-zverejneni.md)             | rozpracovano            | P2       |
 | 017 | [Viditelné neuložené změny](017-neulozene-zmeny.md)                    | hotovo                  | P2       |
+| 018 | [Úprava odstavce](018-uprava-odstavce.md)                              | pripraveno              | P1       |
+| 019 | [Obrázky do PDF](019-obrazky-do-pdf.md)                                | pripraveno              | P2       |
+| 020 | [Přidání nového textu](020-pridani-textu.md)                           | pripraveno              | P2       |
+| 021 | [Vlastnosti dokumentu a skryté údaje](021-vlastnosti-dokumentu.md)    | pripraveno              | P2       |
 
 ## Roadmapa
 
@@ -54,7 +58,7 @@ Pořadí stavby. Každý milník končí verzí, kterou vlastník (Hrabatko) ote
 | **M2 – Stránky a soubory**           | Mazat, vkládat, přeřazovat a otáčet stránky; slučovat a rozdělovat soubory.                                                                               | 003, 004    |
 | **M3 – Heslo**                       | Zamknout a odemknout soubor heslem.                                                                                                                       | 005         |
 | **M4 – Přepsání textu, etapa 1**     | Oprava slova nebo čísla v rámci řádku.                                                                                                                    | 006         |
-| **M5 – Přepsání textu, etapa 2**     | Úprava odstavce s přelitím textu.                                                                                                                         | 006         |
+| **M5 – Přepsání textu, etapa 2**     | Úprava odstavce s přelitím textu.                                                                                                                         | 018         |
 | **M6 – Text ve vnořených objektech** | Přepsání řádku i uvnitř vnořených objektů stránky (PDF z PowerPointu).                                                                                    | 007         |
 | **M7 – Zpět/Znovu ukáže změnu**      | Po Zpět/Znovu se dokument posune na dotčené místo a zvýrazní ho; u hesla zpráva.                                                                          | 009         |
 | **M8 – Hledání ve skenech**          | Rozpoznání textu ve skenech (OCR): neviditelná textová vrstva, hledání a kopírování.                                                                      | 008         |
@@ -65,8 +69,12 @@ Pořadí stavby. Každý milník končí verzí, kterou vlastník (Hrabatko) ote
 | **M13 – Program pro Windows**        | Instalátor MSI (Electron): samostatný program bez Chrome, otevírání z Průzkumníku; instalace přes Chrome (013) se ruší. Automatické aktualizace až s 016. | 014         |
 | **M14 – Neuložené změny**            | Tlačítko Uložit neaktivní bez změn a zvýrazněné po změně; hvězdička v titulku zůstává.                                                                    | 017         |
 | **M15 – Zveřejnění 1.0.0**           | Veřejně pro běžné lidi s Windows: Microsoft Store (MSIX), kód na GitHubu pod GPL-3.0-or-later, vydavatel „Hrabatko“.                                      | 016         |
+| **M16 – Záložky**                    | Víc dokumentů v jednom okně jako záložky (nejvýš 10), otevírání z Průzkumníku do záložky.                                                                 | 015         |
+| **M17 – Obrázky do PDF**             | Fotky a skeny (JPG, PNG) jako nové stránky nebo nové PDF; A4 nebo podle obrázku, zmenšení, natočení podle EXIF.                                           | 019         |
+| **M18 – Přidání textu**              | Nový text na prázdné místo stránky s volbou písma a formátu; přesun a úprava přidaného textu.                                                             | 020         |
+| **M19 – Vlastnosti dokumentu**       | Vlastnosti dokumentu (Ctrl+D) s úpravou; odstranění skrytých údajů, příloh a skriptů.                                                                     | 021         |
 
-Odloženo (bez milníku): záložky (015, nápad); úprava odstavce (M5) až po zveřejnění.
+Po zveřejnění (016) se staví úprava odstavce (M5, 018), potom záložky (M16, 015), obrázky do PDF (M17, 019), přidání textu (M18, 020) a vlastnosti dokumentu (M19, 021).
 
 Pravidla: milník používá jen specifikace ve stavu `pripraveno`; pozdější milníky může vlastník přeřadit.
 
@@ -125,3 +133,23 @@ Pravidla: milník používá jen specifikace ve stavu `pripraveno`; pozdější 
 2026-11-17 (rozhodnutí vlastníka): zveřejnění (016) se staví hned, před úpravou odstavce (M5); specifikace přepsána do návrhu (běžní lidé s Windows, Microsoft Store, GPL-3.0-or-later, vydavatel „Hrabatko“). Milník se přidělí po schválení.
 
 2026-11-17 (rozhodnutí vlastníka): specifikace 016 schválena (stav `pripraveno`) jako milník M15 — první veřejná verze 1.0.0; staví se hned, před úpravou odstavce (M5).
+
+2026-11-18 (rozhodnutí vlastníka): úprava odstavce (M5) se rozpracovává jako samostatná specifikace 018 (stav `navrh`); 006 zůstává uzavřená po etapě 1.
+
+2026-11-18 (rozhodnutí vlastníka): specifikace 018 schválena (stav `pripraveno`) jako milník M5; staví se po dokončení 016, až vlastník řekne.
+
+2026-11-18 (rozhodnutí vlastníka): záložky (015) rozepsány do návrhu (priorita P2); stavět se budou po úpravě odstavce (M5).
+
+2026-11-18 (rozhodnutí vlastníka): specifikace 015 schválena (stav `pripraveno`) jako milník M16; staví se po úpravě odstavce (M5).
+
+2026-11-18 (nápad vlastníka): obrázky do PDF (019) rozepsány do návrhu (priorita P2); HEIC se neřeší.
+
+2026-11-18 (rozhodnutí vlastníka): specifikace 019 schválena (stav `pripraveno`) jako milník M17; staví se po záložkách (M16).
+
+2026-11-18 (nápad vlastníka): přidání nového textu (020, etapa 3 přepsání textu) rozepsáno do návrhu (priorita P2); staví se po obrázcích do PDF (M17).
+
+2026-11-18 (rozhodnutí vlastníka): specifikace 020 schválena (stav `pripraveno`) jako milník M18; staví se po obrázcích do PDF (M17).
+
+2026-11-18 (nápad vlastníka): vlastnosti dokumentu a odstranění skrytých údajů (021) rozepsány do návrhu (priorita P2); staví se po přidání textu (M18).
+
+2026-11-18 (rozhodnutí vlastníka): specifikace 021 schválena (stav `pripraveno`) jako milník M19; staví se po přidání textu (M18).
