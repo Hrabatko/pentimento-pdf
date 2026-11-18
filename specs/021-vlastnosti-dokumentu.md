@@ -1,6 +1,6 @@
 # 021 – Vlastnosti dokumentu a skryté údaje
 
-- **Stav:** navrh
+- **Stav:** pripraveno
 - **Priorita:** P2
 - **Závisí na:** 003 (ukládání), 004 (rozdělení, vyjmutí stránek), 017 (neuložené změny)
 
@@ -67,6 +67,8 @@ Kritéria označená **(A)** nejsou přímo z odpovědí vlastníka, ale z chov�
 ## Poznámky
 
 2026-11-18 (odpovědi vlastníka): ukázat všechny popisné údaje, název/autor/předmět/klíčová slova jde změnit; „Odstranit skryté údaje“ smaže popisné údaje, přílohy a skripty; program o sobě nic nezapisuje; „⋯ → Vlastnosti dokumentu…“ a Ctrl+D; bez upozornění při ukládání; staví se jako milník M19 po přidání textu (M18).
+
+2026-11-18 (rozhodnutí vlastníka): specifikace včetně kritérií označených (A) **schválena**, stav `pripraveno`, milník M19; staví se po přidání textu (M18).
 
 2026-11-18 (zjištění Claude Code): úpravy dokumentu už dnes metadata nemění (`updateMetadata: false` v `src/core/pdf-editing.ts`, `text-edit.ts`, `password.ts`, `signature-pdf.ts`, `ocr/text-layer.ts`). Výjimkou je vytvoření nového dokumentu při vyjmutí a rozdělení (`PDFDocument.create()` v `src/core/pdf-editing.ts`), kde knihovna zapíše svůj název do „Producer“ a „Creator“ a data vytvoření a změny. Řeší kritérium „Nové dokumenty… neobsahují nic o programu“.
 
