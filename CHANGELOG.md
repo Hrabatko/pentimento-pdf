@@ -4,6 +4,10 @@ Každá dokončená změna se sem zapíše jednou větou z pohledu uživatele. N
 
 ## Nevydáno
 
+### 1.0.1 – Oprava značky verze
+
+- Opraveno: verze z Microsoft Storu u čísla verze (v liště a v „⋯ → O programu“) chybně ukazovala „(rozpracovaná)“.
+
 ### 1.0.0 – Zveřejnění (M15)
 
 - První veřejná verze: zdrojový kód na GitHubu pod licencí GPL-3.0-or-later (vydavatel Hrabatko) a balíček pro Microsoft Store s vlastní ikonou, dlaždicemi a nabídkou „Otevřít v programu“ pro PDF.

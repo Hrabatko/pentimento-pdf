@@ -45,7 +45,7 @@ Priorita: `P1` (nutné) · `P2` (mělo by být) · `P3` (hezké mít)
 | 018 | [Úprava odstavce](018-uprava-odstavce.md)                              | pripraveno              | P1       |
 | 019 | [Obrázky do PDF](019-obrazky-do-pdf.md)                                | pripraveno              | P2       |
 | 020 | [Přidání nového textu](020-pridani-textu.md)                           | pripraveno              | P2       |
-| 021 | [Vlastnosti dokumentu a skryté údaje](021-vlastnosti-dokumentu.md)    | pripraveno              | P2       |
+| 021 | [Vlastnosti dokumentu a skryté údaje](021-vlastnosti-dokumentu.md)     | pripraveno              | P2       |
 
 ## Roadmapa
 

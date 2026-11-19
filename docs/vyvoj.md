@@ -121,9 +121,10 @@ Plán podle roadmapy: úprava odstavce (M5) = 1.1.0, záložky (M16) = 1.2.0. Ba
 1. **Změny:** v `CHANGELOG.md` přesunout položky z „Nevydáno“ pod nový nadpis `### X.Y.Z – Název (Mn)`; pod „Nevydáno“ zůstane „Zatím nic.“ Totéž v anglickém `CHANGELOG.en.md`.
 2. **Číslo verze** na všech místech: `package.json`, `package-lock.json` (u `pentimento-pdf`, dvakrát nahoře) a `src/core/app-info.ts` (`APP_VERSION`, zobrazuje ho „⋯ → O programu“). Shodu hlídá test.
 3. **Texty pro Store:** do [`docs/microsoft-store.md`](microsoft-store.md) doplnit „Novinky ve verzi X.Y.Z“ česky i anglicky (jedna až tři věty z CHANGELOGu). Když se změnil vzhled nebo přibyla viditelná funkce, nové snímky obrazovky: `npm.cmd run store:screenshots`; jinak se staré nechají.
-4. **Ověření:** `npm.cmd run verify` — sestaví i instalátor MSI a balíček pro Store `release\store\Pentimento PDF X.Y.Z.appx` a otestuje je.
-5. **Commit** „Vydání X.Y.Z – …“ a značka `git tag -a vX.Y.Z -m "…"`.
-6. **GitHub:** `node scripts/public-check.ts` musí projít; potom **jen s výslovným souhlasem vlastníka** nahrát `main` i značku (`git push origin main` a `git push origin vX.Y.Z`).
+4. **Ověření:** `npm.cmd run verify` — sestaví i instalátor MSI a zkušební balíček pro Store a otestuje je.
+5. **Commit** „Vydání X.Y.Z – …“ v `main` a značka `git tag -a vX.Y.Z -m "…"`.
+6. **Balíček pro Store:** `npm.cmd run store:release` v `main` bez neuložených změn → `release\store\Pentimento PDF X.Y.Z.appx`. Jinde příkaz sestavení odmítne, aby balíček neukazoval „(rozpracovaná)“ (chyba verze 1.0.0, 2026-11-19). Zkušební balíček z `npm.cmd run store` (součást `verify`) se do Storu nenahrává.
+7. **GitHub:** `node scripts/public-check.ts` musí projít; potom **jen s výslovným souhlasem vlastníka** nahrát `main` i značku (`git push origin main` a `git push origin vX.Y.Z`).
 
 ### 2. Odeslání do Storu (vlastník)
 

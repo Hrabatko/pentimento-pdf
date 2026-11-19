@@ -10,7 +10,7 @@ Jak dostat Pentimento PDF do Microsoft Storu (specifikace [016](../specs/016-zve
    - `Package/Identity/Name` (např. `12345Hrabatko.PentimentoPDF`)
    - `Package/Identity/Publisher` (`CN=…` s dlouhým kódem)
    - `Package/Properties/PublisherDisplayName` (má být `Hrabatko`)
-4. **Claude Code** zapíše hodnoty do `electron-builder.store.yml`, změní verzi na **1.0.0**, doplní CHANGELOG, spustí celé ověření, sestaví balíček (`npm.cmd run store` → `release\store\Pentimento PDF 1.0.0.appx`) a se souhlasem vlastníka nahraje `main` na GitHub.
+4. **Claude Code** zapíše hodnoty do `electron-builder.store.yml`, změní verzi na **1.0.0**, doplní CHANGELOG, spustí celé ověření, sestaví balíček (`npm.cmd run store:release` v `main` → `release\store\Pentimento PDF X.Y.Z.appx`; od 1.0.1, viz `docs/vyvoj.md`) a se souhlasem vlastníka nahraje `main` na GitHub.
 5. **(vlastník) Odeslání ke schválení** — v Partner Center **Start your submission**:
    - **Pricing and availability:** zdarma (Free), všechny trhy. Kdo chce nejdřív vyzkoušet sám: viditelnost **Private audience** nebo **Hidden** (program jde nainstalovat jen přes odkaz) a po vyzkoušení přepnout na **Public**.
    - **Properties:** kategorie **Productivity**; podpora: odkaz na hlášení chyb (viz níže); zásady soukromí: odkaz na `PRIVACY.md` (viz níže). Na otázku, zda program sbírá osobní údaje: **ne**.
@@ -75,6 +75,8 @@ Bezplatné úpravy PDF, které Adobe Reader neumí: přepsání textu, práce se
 
 **Klíčová slova** (nejvýš 7): PDF, upravit PDF, přepsat text, sloučit PDF, rozdělit PDF, heslo PDF, podpis
 
+**Novinky ve verzi 1.0.1:** Opraveno: u čísla verze se už neukazuje „(rozpracovaná)“.
+
 **Novinky ve verzi 1.0.0:** První veřejná verze.
 
 ## Texty do Storu — angličtina
@@ -109,6 +111,8 @@ Free PDF edits that Adobe Reader can't do: rewrite text, work with pages, merge,
 - Fully offline, no accounts, no telemetry
 
 **Keywords:** PDF, edit PDF, rewrite text, merge PDF, split PDF, PDF password, signature
+
+**What's new in 1.0.1:** Fixed: the version number no longer shows “(rozpracovaná)” (work in progress).
 
 **What's new in 1.0.0:** First public release.
 

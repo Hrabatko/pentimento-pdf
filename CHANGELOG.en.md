@@ -4,6 +4,10 @@ English translation of [CHANGELOG.md](CHANGELOG.md) (Czech, authoritative). Ever
 
 ## Unreleased
 
+### 1.0.1 – Version label fix
+
+- Fixed: the Microsoft Store version wrongly showed “(rozpracovaná)” (work in progress) next to the version number (in the toolbar and in “⋯ → About”).
+
 ### 1.0.0 – Public release (M15)
 
 - First public release: source code on GitHub under GPL-3.0-or-later (publisher Hrabatko) and a Microsoft Store package with its own icon, tiles and “Open with” for PDFs.

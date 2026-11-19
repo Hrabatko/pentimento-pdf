@@ -1,31 +1,20 @@
-import { execFileSync } from "node:child_process";
 import { defineConfig } from "vite";
+import { buildKind, RELEASE_ENV, readGitState } from "./scripts/build-kind.ts";
 
-/**
- * A work-in-progress build (013, 014): built outside the main branch or with
- * uncommitted changes. Without git it can't be told — then rather "in progress".
- */
-function isDevBuild(): boolean {
-	try {
-		const git = (...args: string[]) =>
-			execFileSync("git", args, { encoding: "utf8" }).trim();
-		return (
-			git("rev-parse", "--abbrev-ref", "HEAD") !== "main" ||
-			git("status", "--porcelain") !== ""
-		);
-	} catch {
-		return true;
-	}
+const kind = buildKind(
+	readGitState(import.meta.dirname),
+	process.env[RELEASE_ENV] === "1",
+);
+if (!kind.ok) {
+	throw new Error(kind.error);
 }
-
-const dev = isDevBuild();
 
 // The app runs in the program (Electron 45 = Chromium 156); the web version is
 // for development and tests in Chrome. The build target matches current Chromium.
 export default defineConfig({
 	define: {
 		// The "(in progress)" mark at the version in the toolbar (013).
-		__PENTIMENTO_DEV_BUILD__: JSON.stringify(dev),
+		__PENTIMENTO_DEV_BUILD__: JSON.stringify(kind.devBuild),
 	},
 	build: {
 		target: "chrome130",

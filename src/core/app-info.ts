@@ -2,7 +2,7 @@
 import { type Message, message } from "./i18n/index.ts";
 
 export const APP_NAME = "Pentimento PDF";
-export const APP_VERSION = "1.0.0";
+export const APP_VERSION = "1.0.1";
 /** Publisher and copyright holder — the owner's nickname (016); = author in package.json. */
 export const APP_PUBLISHER = "Hrabatko";
 /** Licence programu (016); = license v package.json, text v LICENSE. */
