@@ -52,3 +52,4 @@ Specifikace se staví po dávkách; kroky označené **(dávka N)** půjdou otes
 | ---------- | --------------------------------------------- | ----- | ---------------------------------------------------- |
 | 2026-11-17 | 0.12.1 (rozpracovaná, větev `016-zverejneni`) | 1–12  | Vše prošlo (vlastník).                               |
 | 2026-11-19 | 1.0.0 z Microsoft Storu                       | 13–15 | Funguje (vlastník). Krok 16 čeká na schválení 1.0.1. |
+| 2026-11-19 | 1.0.1 z Microsoft Storu (aktualizace)         | 16    | Prošlo (vlastník): verze bez „(rozpracovaná)“.       |
