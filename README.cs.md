@@ -24,7 +24,7 @@ Bezplatný program pro Windows na úpravy PDF, které bezplatný Adobe Reader ne
 
 ## Instalace
 
-Pentimento PDF bude k dispozici v **Microsoft Storu** (odkaz přibude s prvním veřejným vydáním). Verzi ze Storu podepisuje Microsoft, nainstaluje se bez varování a aktualizuje se sama.
+Pentimento PDF nainstalujete z **Microsoft Storu**: <https://apps.microsoft.com/detail/9NP5BND7MLFS> (nebo v aplikaci Microsoft Store vyhledejte „Pentimento PDF“). Je zdarma. Verzi ze Storu podepisuje Microsoft, nainstaluje se bez varování a aktualizuje se sama.
 
 Po instalaci jde PDF otevřít z Průzkumníku přes **pravé tlačítko → Otevřít v programu → Pentimento PDF**. Výchozí program pro PDF se nemění.
 

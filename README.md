@@ -24,7 +24,7 @@ A free Windows program for the PDF edits that the free Adobe Reader can't do: re
 
 ## Install
 
-Pentimento PDF will be available in the **Microsoft Store** (the link will be added with the first public release). The Store version is signed by Microsoft, installs without warnings and updates automatically.
+Install Pentimento PDF from the **Microsoft Store**: <https://apps.microsoft.com/detail/9NP5BND7MLFS> (or search for “Pentimento PDF” in the Microsoft Store app). It's free. The Store version is signed by Microsoft, installs without warnings and updates automatically.
 
 After installing, you can open a PDF from File Explorer with **right-click → Open with → Pentimento PDF**. Your default PDF program doesn't change.
 

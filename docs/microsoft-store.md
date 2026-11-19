@@ -25,6 +25,7 @@ Jak dostat Pentimento PDF do Microsoft Storu (specifikace [016](../specs/016-zve
 
 ## Odkazy pro formulář
 
+- Aplikace ve Storu (Store ID `9NP5BND7MLFS`): <https://apps.microsoft.com/detail/9NP5BND7MLFS>
 - Web / zdrojový kód: <https://github.com/Hrabatko/pentimento-pdf>
 - Podpora (hlášení chyb): <https://github.com/Hrabatko/pentimento-pdf/issues>
 - Zásady ochrany osobních údajů: <https://github.com/Hrabatko/pentimento-pdf/blob/main/PRIVACY.md>
