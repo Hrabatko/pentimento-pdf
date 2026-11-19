@@ -37,8 +37,18 @@ Specifikace se staví po dávkách; kroky označené **(dávka N)** půjdou otes
 | 11  | Spustit `spustit.cmd`, ⋯ → O programu, pak běžná práce                                   | Program funguje; vzhled a jazyk jsou výchozí a podpisy z rozpracované verze nejsou (nové klíče úložiště) — přidej si testovací podpis | Obsah a licence 3 |
 | 12  | Najít v projektu své iniciály (Průzkumník, hledání)                                      | Iniciály nikde v projektu (kromě názvu samotné složky projektu, ten se nezveřejňuje)                                                  | Obsah a licence 3 |
 
+### Dávka 4 – verze ze Storu
+
+| #   | Krok                                                                                             | Očekávaný výsledek                                                   | Kritérium         |
+| --- | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------- | ----------------- |
+| 13  | Nainstalovat Pentimento PDF z Microsoft Storu (<https://apps.microsoft.com/detail/9NP5BND7MLFS>) | Instalace bez varování, i se zapnutým Inteligentním řízením aplikací | Microsoft Store 2 |
+| 14  | Spustit z nabídky Start, otevřít PDF, upravit text, uložit, vložit podpis                        | Vše funguje jako v instalaci z MSI                                   | Microsoft Store 2 |
+| 15  | V Průzkumníku u PDF pravé tlačítko → Otevřít v programu → Pentimento PDF                         | PDF se otevře; výchozí program pro PDF se nezměnil                   | Microsoft Store 2 |
+| 16  | Po aktualizaci na 1.0.1: ⋯ → O programu                                                          | „verze 1.0.1“ bez „(rozpracovaná)“; podpisy a nastavení zůstaly      | (oprava 1.0.1)    |
+
 ## Výsledky
 
-| Datum      | Verze                                         | Kroky | Výsledek               |
-| ---------- | --------------------------------------------- | ----- | ---------------------- |
-| 2026-11-17 | 0.12.1 (rozpracovaná, větev `016-zverejneni`) | 1–12  | Vše prošlo (vlastník). |
+| Datum      | Verze                                         | Kroky | Výsledek                                             |
+| ---------- | --------------------------------------------- | ----- | ---------------------------------------------------- |
+| 2026-11-17 | 0.12.1 (rozpracovaná, větev `016-zverejneni`) | 1–12  | Vše prošlo (vlastník).                               |
+| 2026-11-19 | 1.0.0 z Microsoft Storu                       | 13–15 | Funguje (vlastník). Krok 16 čeká na schválení 1.0.1. |

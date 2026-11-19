@@ -12,8 +12,8 @@ Cíle:
 - **Žádný klon Readeru.** Aplikace dělá jen to, co bezplatný Reader neumí. Anotace, vyplňování formulářů a elektronické podpisy certifikátem dál zůstávají na Readeru a sem nepatří. Výjimka: vložení obrázku podpisu (012), aby šlo dokument upravit i podepsat v jedné aplikaci (rozhodnutí vlastníka 2026-11-13).
 - **Přepsání existujícího textu** je hlavní cíl; staví se postupně (nejdřív oprava v rámci řádku, později víc).
 - **Cestou k němu** vzniknou snadné a užitečné funkce: prohlížení, práce se stránkami, sloučení a rozdělení souborů, heslo k souboru.
-- **Offline a soukromě:** soubory nikdy neopustí počítač; žádné účty ani telemetrie. Jediné síťové spojení je kontrola aktualizací programu (jen dotaz na číslo verze, lze vypnout; od 014, viz „Změna záměru 2026-11-16“).
-- **Zatím pro vlastníka:** jeden uživatel, Windows, žádná podpora jiných systémů. Program se ale staví tak, aby šel později zveřejnit (014 instalátor, 016 zveřejnění; viz „Změna záměru 2026-11-16“).
+- **Offline a soukromě:** soubory nikdy neopustí počítač; žádné účty ani telemetrie. Program nemá žádné síťové spojení; aktualizace řeší Microsoft Store (od 016, 2026-11-19; dřívější plán vlastní kontroly aktualizací z 014 odpadl).
+- **Pro běžné lidi s Windows** (od 016, verze 1.0.0 v Microsoft Storu 2026-11-19): žádná podpora jiných systémů. Hlavním testerem zůstává vlastník.
 
 **Vlastník produktu, jediný uživatel a hlavní tester: Hrabatko.** Vlastník kód nečte řádek po řádku, proto musí být kód bezpečný už svou konstrukcí a ověřený nástroji a testy, ne revizí člověka.
 
@@ -79,7 +79,7 @@ Všechny funkce a požadavky žijí ve složce [`specs/`](specs/README.md).
 - **Skutečné dokumenty vlastníka v `tests/data/`** (rozhodnutí vlastníka 2026-11-11): ponechávají se tam jako výjimka z pravidla o ukázkových datech; projekt se nešíří a git je jen místní (bez vzdáleného úložiště). Testy na ně neodkazují a generátor je nemaže.
   - 2026-11-17 (016): zůstávají **jen v soukromém archivu** (původní složka s celou historií). Veřejný projekt je nemá: git byl založen znovu bez historie (viz „Práce s gitem“) a `scripts/public-check.ts` před každým zveřejněním ověří, že v kopii nejsou soubory v `tests/data/` (kromě `test-data.ts`), nepovolené binární soubory (např. fotka podpisu) ani soukromé výrazy. Ty jsou v souboru **mimo projekt** (`%APPDATA%\pentimento-private-terms.txt`), aby se osobní údaje nedostaly do kódu.
 - **Název aplikace** (rozhodnutí vlastníka 2026-11-14): **Pentimento PDF** — typ „vlastní jméno + PDF“ jako u většiny PDF nástrojů (SumatraPDF, Stirling-PDF); PDF nástroj tohoto jména se při ověření nenašel (ochranné známky neověřeny). Název je v kódu jen v `APP_NAME` (`src/core/app-info.ts`). Interní klíče úložiště (vzhled, jazyk, podpisy) se původně záměrně neměnily; **2026-11-17 (rozhodnutí vlastníka, 016)** se z nich i z celého projektu odstranily iniciály vlastníka (`pentimento-pdf…`, značky podpisů `Pentimento…`, vydavatel „Hrabatko“). Podpisy a nastavení uložené pod starými klíči se nepřevádějí; verze ze Storu začíná s čistými daty a vlastník podpisy přidá znovu.
-- **Platforma:** jen Windows, jeden uživatel, offline (rozhodnutí vlastníka 2026-11-05); od 014 s jedinou výjimkou — kontrolou aktualizací (2026-11-16).
+- **Platforma:** jen Windows, offline (rozhodnutí vlastníka 2026-11-05); od 016 pro běžné lidi přes Microsoft Store, bez síťového spojení — aktualizace řeší Store (2026-11-19).
 - **Typ aplikace:** lokální aplikace v prohlížeči **Google Chrome**, bez serveru na internetu (rozhodnutí vlastníka 2026-11-05). Jiné prohlížeče se nepodporují. Podrobnosti: `specs/001-technologie.md`. **Mění se 2026-11-16 (014):** samostatný program pro Windows (Electron); webová verze v prohlížeči jen pro vývoj a testy. Do dokončení 014 platí dosavadní stav.
 
 ## Otevřená rozhodnutí

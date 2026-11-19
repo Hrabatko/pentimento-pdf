@@ -1,6 +1,6 @@
 # 016 – Zveřejnění (GitHub a Microsoft Store)
 
-- **Stav:** rozpracovano
+- **Stav:** hotovo
 - **Priorita:** P2
 - **Závisí na:** 014 (samostatný program), 017 (hotová); staví se před úpravou odstavce M5 (rozhodnutí vlastníka 2026-11-17)
 
@@ -48,30 +48,30 @@ Zveřejnění proběhne ve čtyřech dávkách. Každá končí commitem a před
 
 ### Obsah a licence
 
-- [ ] V kořeni projektu je `LICENSE` s textem GPL-3.0; README, program („⋯ → O programu“) a `package.json` uvádějí „GPL-3.0-or-later“ a držitele práv „Hrabatko“. **(V)**
-- [ ] Program i balíček obsahují přehled licencí všech knihoven, písem a dat (vč. textu OFL-1.1 u písem); vzniká při sestavení a test hlídá, že v něm je každá závislost z `package.json`. **(A)**
-- [ ] Vydavatel instalátoru a balíčku je „Hrabatko“; skutečné jméno vlastníka ani jeho e-mail nejsou nikde v kopii projektu (kontrola). **(V)**
-- [ ] README je česky i anglicky a běžnému člověku řekne: co program umí a neumí, jak ho nainstalovat ze Storu, že soubory neopustí počítač, jak nahlásit chybu, licenci. **(V)**
-- [ ] Zásady ochrany osobních údajů česky i anglicky: program nic nesbírá ani neodesílá. **(A)**
-- [ ] Pravidla pro hlášení chyb česky i anglicky; cizí úpravy kódu se nepřijímají. **(V)**
-- [ ] Anglický přehled pro vývojáře; komentáře v kódu anglicky; CHANGELOG česky i anglicky. **(V)**
-- [ ] Specifikace a `CLAUDE.md` se zveřejní česky, jak jsou; před zveřejněním je Claude Code projde, že v nich nejsou osobní údaje, skutečná jména firem ani nic citlivého. **(V)**
+- [x] V kořeni projektu je `LICENSE` s textem GPL-3.0; README, program („⋯ → O programu“) a `package.json` uvádějí „GPL-3.0-or-later“ a držitele práv „Hrabatko“. **(V)**
+- [x] Program i balíček obsahují přehled licencí všech knihoven, písem a dat (vč. textu OFL-1.1 u písem); vzniká při sestavení a test hlídá, že v něm je každá závislost z `package.json`. **(A)**
+- [x] Vydavatel instalátoru a balíčku je „Hrabatko“; skutečné jméno vlastníka ani jeho e-mail nejsou nikde v kopii projektu (kontrola). **(V)**
+- [x] README je česky i anglicky a běžnému člověku řekne: co program umí a neumí, jak ho nainstalovat ze Storu, že soubory neopustí počítač, jak nahlásit chybu, licenci. **(V)**
+- [x] Zásady ochrany osobních údajů česky i anglicky: program nic nesbírá ani neodesílá. **(A)**
+- [x] Pravidla pro hlášení chyb česky i anglicky; cizí úpravy kódu se nepřijímají. **(V)**
+- [x] Anglický přehled pro vývojáře; komentáře v kódu anglicky; CHANGELOG česky i anglicky. **(V)**
+- [x] Specifikace a `CLAUDE.md` se zveřejní česky, jak jsou; před zveřejněním je Claude Code projde, že v nich nejsou osobní údaje, skutečná jména firem ani nic citlivého. **(V)**
 
 ### Čistá kopie a GitHub
 
-- [ ] Veřejné úložiště nemá dosavadní historii a neobsahuje skutečné dokumenty vlastníka; automatická kontrola to ověří před každým nahráním. **(V)**
-- [ ] Na GitHub se nahrává jen po výslovném souhlasu vlastníka u každého nahrání; přihlašovací údaje spravuje vlastník (správce přihlášení Windows), nikdy nejsou v projektu ani v konverzaci. **(V)**
-- [ ] Hlášení chyb je zapnuté a má šablonu (česky i anglicky); cizí úpravy kódu se zdvořile odmítají (šablona odpovědi). **(V)**
-- [ ] Po přesunu do nové kopie dál platí `npm.cmd run verify` a vše projde. **(A)**
+- [x] Veřejné úložiště nemá dosavadní historii a neobsahuje skutečné dokumenty vlastníka; automatická kontrola to ověří před každým nahráním. **(V)**
+- [x] Na GitHub se nahrává jen po výslovném souhlasu vlastníka u každého nahrání; přihlašovací údaje spravuje vlastník (správce přihlášení Windows), nikdy nejsou v projektu ani v konverzaci. **(V)**
+- [x] Hlášení chyb je zapnuté a má šablonu (česky i anglicky); cizí úpravy kódu se zdvořile odmítají (šablona odpovědi). **(V)**
+- [x] Po přesunu do nové kopie dál platí `npm.cmd run verify` a vše projde. **(A)**
 
 ### Microsoft Store
 
-- [ ] `sestavit-balicek-store.cmd` (nebo obdobný) sestaví balíček MSIX; automatický test ověří jeho manifest (název, vydavatel podle účtu ve Storu, „Otevřít v programu“ bez změny výchozího programu, žádná oprávnění navíc). **(A)**
-- [ ] Program ze Storu se nainstaluje a spustí i se zapnutým Inteligentním řízením aplikací, bez varování; „Otevřít v programu“ a uložení zpět fungují (ruční test vlastníka po schválení). **(V)**
-- [ ] Texty do Storu (popis, novinky ve verzi) česky i anglicky; Store je schválí. **(V)**
-- [ ] Program nemá žádné síťové spojení (aktualizace řeší Store); zásada „offline“ v `CLAUDE.md` platí bez výjimky. **(V)**
-- [ ] První veřejná verze je **1.0.0** (v programu, balíčku, CHANGELOG i ve Storu). **(V)**
-- [ ] Vlastník používá program ze Storu; instalátor MSI (`sestavit-instalator.cmd`) dál slouží k vyzkoušení rozpracované verze a se Storem se nepere (vlastní data, souběžný běh). **(V)**
+- [x] `sestavit-balicek-store.cmd` (nebo obdobný) sestaví balíček MSIX; automatický test ověří jeho manifest (název, vydavatel podle účtu ve Storu, „Otevřít v programu“ bez změny výchozího programu, žádná oprávnění navíc). **(A)**
+- [x] Program ze Storu se nainstaluje a spustí i se zapnutým Inteligentním řízením aplikací, bez varování; „Otevřít v programu“ a uložení zpět fungují (ruční test vlastníka po schválení). **(V)**
+- [x] Texty do Storu (popis, novinky ve verzi) česky i anglicky; Store je schválí. **(V)**
+- [x] Program nemá žádné síťové spojení (aktualizace řeší Store); zásada „offline“ v `CLAUDE.md` platí bez výjimky. **(V)**
+- [x] První veřejná verze je **1.0.0** (v programu, balíčku, CHANGELOG i ve Storu). **(V)**
+- [x] Vlastník používá program ze Storu; instalátor MSI (`sestavit-instalator.cmd`) dál slouží k vyzkoušení rozpracované verze a se Storem se nepere (vlastní data, souběžný běh). **(V)**
 
 ## Mimo rozsah
 
@@ -184,3 +184,5 @@ Navrhované pořadí:
 2026-11-17 (zkouška čistého stažení z GitHubu): `git clone`, `npm ci`, `npm run installer` a `npm run store` prošly. Odhalená chyba: Electron 45 se stahuje až při prvním použití (ne při `npm ci`), takže `spustit.cmd`, jeden test instalátoru a skript na snímky, které hledaly `node_modules\electron\dist\electron.exe` přímo, by ve stažené kopii selhaly. Opraveno: nejdřív `require("electron")` (stáhne ho). Pak ve stažené kopii prošly všechny testy sestaveného programu (13), lint a po `npm run testdata` všech 255 jednotkových testů. Doplněno do `docs/DEVELOPMENT.md`.
 
 2026-11-19 (chyba po zveřejnění, nalezl vlastník): verze 1.0.0 ze Storu ukazovala u čísla verze „(rozpracovaná)“. Příčina: balíček byl sestaven ve větvi `016-zverejneni` (obsahem shodné s `main`), a vite.config.ts bere za rozpracovanou každou verzi sestavenou mimo `main`. Data a funkce to neovlivnilo (složka dat se řídí `app.isPackaged`). Oprava ve verzi 1.0.1: nový příkaz `npm.cmd run store:release` sestaví balíček pro Store jen v `main` bez neuložených změn a sestavení s `PENTIMENTO_RELEASE=1` mimo `main` selže (`scripts/build-kind.ts`, test `tests/unit/scripts/build-kind.test.ts`); postup vydání v `docs/vyvoj.md` ho používá.
+
+2026-11-19 (ruční test vlastníka): program 1.0.0 nainstalovaný z Microsoft Storu funguje (otevření, úpravy, uložení). Kritéria splněna, stav `hotovo`. Poznámky ke kritériím Microsoft Store: balíček sestavuje `npm.cmd run store:release` (místo `.cmd`); zásada „offline“ v `CLAUDE.md` upravena (žádné síťové spojení, aktualizace řeší Store); souběh s instalátorem MSI je zajištěn konstrukcí (balíček ze Storu má vlastní úložiště dat), ručně se zvlášť nezkoušel. Značka verze 1.0.1 (bez „(rozpracovaná)“) se ověří po schválení aktualizace ve Storu (`docs/testovani/016-zverejneni.md`, krok 16).

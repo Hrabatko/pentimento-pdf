@@ -40,7 +40,7 @@ Priorita: `P1` (nutné) · `P2` (mělo by být) · `P3` (hezké mít)
 | 013 | [Instalace jako aplikace (PWA)](013-instalace.md)                      | hotovo (nahradí ji 014) | P2       |
 | 014 | [Klasický instalátor (samostatný program)](014-klasicky-instalator.md) | hotovo                  | P2       |
 | 015 | [Více dokumentů v záložkách](015-zalozky.md)                           | pripraveno              | P2       |
-| 016 | [Zveřejnění (GitHub a Microsoft Store)](016-zverejneni.md)             | rozpracovano            | P2       |
+| 016 | [Zveřejnění (GitHub a Microsoft Store)](016-zverejneni.md)             | hotovo                  | P2       |
 | 017 | [Viditelné neuložené změny](017-neulozene-zmeny.md)                    | hotovo                  | P2       |
 | 018 | [Úprava odstavce](018-uprava-odstavce.md)                              | pripraveno              | P1       |
 | 019 | [Obrázky do PDF](019-obrazky-do-pdf.md)                                | pripraveno              | P2       |
@@ -153,3 +153,5 @@ Pravidla: milník používá jen specifikace ve stavu `pripraveno`; pozdější 
 2026-11-18 (nápad vlastníka): vlastnosti dokumentu a odstranění skrytých údajů (021) rozepsány do návrhu (priorita P2); staví se po přidání textu (M18).
 
 2026-11-18 (rozhodnutí vlastníka): specifikace 021 schválena (stav `pripraveno`) jako milník M19; staví se po přidání textu (M18).
+
+2026-11-19 (rozhodnutí vlastníka): zveřejnění (016, M15) je hotové — verze 1.0.0 v Microsoft Storu (Store ID `9NP5BND7MLFS`) a na GitHubu, oprava 1.0.1 čeká na schválení ve Storu. Další na řadě je úprava odstavce (M5, 018).
