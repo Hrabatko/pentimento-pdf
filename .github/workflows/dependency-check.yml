@@ -1,0 +1,42 @@
+# Monthly dependency check (docs/vyvoj.md "Údržba knihoven", decision of the
+# owner 2026-11-20): reports outdated packages and known vulnerabilities as an
+# issue. It only reads the code; it changes and publishes nothing else.
+# Run by hand: Actions -> Kontrola knihoven -> Run workflow.
+name: Kontrola knihoven
+
+on:
+  schedule:
+    # 06:00 UTC on the 1st of every month.
+    - cron: "0 6 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      # Actions pinned to a commit (not a movable tag), for supply-chain safety.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "26"
+      # Install scripts aren't needed for the check (and don't run third-party code).
+      - run: npm ci --ignore-scripts
+      - run: node scripts/dependency-report.ts report.md
+      - name: Issue with the report
+        if: hashFiles('report.md') != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="Kontrola knihoven $(date -u +%Y-%m)"
+          if gh issue list --state all --search "\"$title\" in:title" --json title --jq '.[].title' | grep -qxF "$title"; then
+            echo "Issue \"$title\" already exists."
+          else
+            gh issue create --title "$title" --body-file report.md
+          fi

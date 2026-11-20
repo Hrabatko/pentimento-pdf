@@ -147,6 +147,7 @@ Místo pull requestu končí každá dokončená část práce commitem a shrnut
 - Verze vždy **přesně zafixované** (lockfile nebo přesné číslo verze).
 - Každá závislost je zapsaná v [`docs/zavislosti.md`](docs/zavislosti.md) s verzí, licencí a důvodem.
 - Nejdřív zkus standardní knihovnu daného jazyka.
+- **Údržba** (rozhodnutí vlastníka 2026-11-20): knihovny kontroluje jednou měsíčně úloha na GitHubu (issue „Kontrola knihoven RRRR-MM“) a vždy před vydáním (`npm.cmd run deps:check`); upozornění GitHubu na bezpečnostní chyby jsou zapnutá. **Každou aktualizaci knihovny (i drobnou) schvaluje vlastník.** Bezpečnostní oprava knihovny v programu = hned technická verze. Postup: [`docs/vyvoj.md`](docs/vyvoj.md), oddíl „Údržba knihoven“.
 
 ## Konvence
 
@@ -162,6 +163,7 @@ PRIVACY.md, CONTRIBUTING.md   zásady soukromí a hlášení chyb (česky i angl
 spustit.cmd           běžné spuštění dvojklikem (sestaví a spustí program ze složky, bez instalace; od 014)
 sestavit-instalator.cmd   sestaví instalátor do release/ (014)
 electron-builder.yml  nastavení sestavení programu a instalátoru (014); electron-builder.store.yml = balíček pro Microsoft Store (016)
+.github/              šablony hlášení chyb; workflows/ = měsíční kontrola knihoven na GitHubu (2026-11-20)
 installer/            doplněk instalátoru MSI (msi-project.ts, open-with.ts: Otevřít v programu bez změny výchozího programu); appx/ = dlaždice balíčku pro Store
 specs/                požadavky (viz výše)
 docs/                 dokumentace pro vývoj: spuštění, závislosti, ruční testy; DEVELOPMENT.md = anglický přehled pro vývojáře (016)

@@ -120,11 +120,12 @@ Plán podle roadmapy: úprava odstavce (M5) = 1.1.0, záložky (M16) = 1.2.0. Ba
 
 1. **Změny:** v `CHANGELOG.md` přesunout položky z „Nevydáno“ pod nový nadpis `### X.Y.Z – Název (Mn)`; pod „Nevydáno“ zůstane „Zatím nic.“ Totéž v anglickém `CHANGELOG.en.md`.
 2. **Číslo verze** na všech místech: `package.json`, `package-lock.json` (u `pentimento-pdf`, dvakrát nahoře) a `src/core/app-info.ts` (`APP_VERSION`, zobrazuje ho „⋯ → O programu“). Shodu hlídá test.
-3. **Texty pro Store:** do [`docs/microsoft-store.md`](microsoft-store.md) doplnit „Novinky ve verzi X.Y.Z“ česky i anglicky (jedna až tři věty z CHANGELOGu). Když se změnil vzhled nebo přibyla viditelná funkce, nové snímky obrazovky: `npm.cmd run store:screenshots`; jinak se staré nechají.
-4. **Ověření:** `npm.cmd run verify` — sestaví i instalátor MSI a zkušební balíček pro Store a otestuje je.
-5. **Commit** „Vydání X.Y.Z – …“ v `main` a značka `git tag -a vX.Y.Z -m "…"`.
-6. **Balíček pro Store:** `npm.cmd run store:release` v `main` bez neuložených změn → `release\store\Pentimento PDF X.Y.Z.appx`. Jinde příkaz sestavení odmítne, aby balíček neukazoval „(rozpracovaná)“ (chyba verze 1.0.0, 2026-11-19). Zkušební balíček z `npm.cmd run store` (součást `verify`) se do Storu nenahrává.
-7. **GitHub:** `node scripts/public-check.ts` musí projít; potom **jen s výslovným souhlasem vlastníka** nahrát `main` i značku (`git push origin main` a `git push origin vX.Y.Z`).
+3. **Kontrola knihoven:** `npm.cmd run deps:check` (viz „Údržba knihoven“); bezpečnostní chyby v knihovnách programu se opraví před vydáním.
+4. **Texty pro Store:** do [`docs/microsoft-store.md`](microsoft-store.md) doplnit „Novinky ve verzi X.Y.Z“ česky i anglicky (jedna až tři věty z CHANGELOGu). Když se změnil vzhled nebo přibyla viditelná funkce, nové snímky obrazovky: `npm.cmd run store:screenshots`; jinak se staré nechají.
+5. **Ověření:** `npm.cmd run verify` — sestaví i instalátor MSI a zkušební balíček pro Store a otestuje je.
+6. **Commit** „Vydání X.Y.Z – …“ v `main` a značka `git tag -a vX.Y.Z -m "…"`.
+7. **Balíček pro Store:** `npm.cmd run store:release` v `main` bez neuložených změn → `release\store\Pentimento PDF X.Y.Z.appx`. Jinde příkaz sestavení odmítne, aby balíček neukazoval „(rozpracovaná)“ (chyba verze 1.0.0, 2026-11-19). Zkušební balíček z `npm.cmd run store` (součást `verify`) se do Storu nenahrává.
+8. **GitHub:** `node scripts/public-check.ts` musí projít; potom **jen s výslovným souhlasem vlastníka** nahrát `main` i značku (`git push origin main` a `git push origin vX.Y.Z`).
 
 ### 2. Odeslání do Storu (vlastník)
 
@@ -149,3 +150,15 @@ Když se ve verzi ze Storu najde chyba: oprava ve vlastní větvi (např. `oprav
 ### Značky
 
 K vydané verzi se jde vrátit podle značky (`git tag` je vypíše). V novém gitu (od 2026-11-17, 016) je první značka `v1.0.0`; značky starších verzí (`v0.5.0`–`v0.12.1`) jsou jen v soukromém archivu `D:\pentimento-pdf-archiv`.
+
+## Údržba knihoven
+
+Rozhodnutí vlastníka 2026-11-20. Program otevírá cizí PDF (nedůvěryhodné soubory), proto záleží na bezpečnostních opravách knihoven, které je čtou (pdf.js, pdf-lib), a Electronu (zabudovaný Chromium; opravy dostávají jen poslední tři hlavní verze, nová vychází zhruba každé dva měsíce).
+
+- **Měsíční kontrola na GitHubu:** úloha „Kontrola knihoven“ (`.github/workflows/dependency-check.yml`) běží 1. dne v měsíci, spustí `scripts/dependency-report.ts` (`npm outdated` a `npm audit`) a když něco najde, založí issue „Kontrola knihoven RRRR-MM“ s českým přehledem. GitHub o něm pošle vlastníkovi e-mail. Nic nemění ani neinstaluje. Ručně: na GitHubu **Actions → Kontrola knihoven → Run workflow**; místně `npm.cmd run deps:check`.
+- **Před každým vydáním** (oddíl „Vydání verze“) se kontrola spustí taky.
+- **Upozornění GitHubu (Dependabot alerts)** jsou zapnutá: e-mail hned, když se v některé knihovně objeví bezpečnostní chyba. Automatické pull requesty (Dependabot updates) se nezapínají — cizí úpravy se nepřijímají.
+- **Každou aktualizaci schvaluje vlastník** (i drobnou): Claude Code přečte hlášení, navrhne, co aktualizovat a proč (bezpečnost, v programu / jen vývojový nástroj, drobná / hlavní verze), a čeká na souhlas.
+- **Postup aktualizace:** vlastní větev (např. `udrzba-2026-12`), přesné verze v `package.json`, `npm.cmd run verify`, aktualizovat `docs/zavislosti.md` (přehled licencí v programu se vytvoří sám), CHANGELOG česky i anglicky, ruční test vlastníka, sloučení do `main`.
+- **Vydání:** bezpečnostní oprava knihovny v programu (Electron, pdf.js, pdf-lib…) = hned technická verze se zvýšeným posledním číslem (např. 1.0.2) postupem „Vydání verze“; ostatní aktualizace se přibalí k nejbližší verzi s novou funkcí. Aktualizace jen vývojových nástrojů vydání nepotřebují.
+- Naplánované úlohy GitHub vypne po 60 dnech bez změn v repozitáři (pošle e-mail); znovu se zapnou na stránce úlohy tlačítkem **Enable workflow**.

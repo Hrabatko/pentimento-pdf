@@ -23,6 +23,7 @@
 		"installer": "npm run build && npm run build:electron && electron-builder --win msi",
 		"store": "npm run build && npm run build:electron && electron-builder --win appx --config electron-builder.store.yml",
 		"store:release": "node scripts/store-release.ts",
+		"deps:check": "node scripts/dependency-report.ts",
 		"store:screenshots": "npm run build && npm run build:electron && node scripts/store-screenshots.ts",
 		"typecheck": "tsc --noEmit -p tsconfig.json",
 		"lint": "biome check --error-on-warnings .",
